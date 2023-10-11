@@ -1,0 +1,20 @@
+name = "worker"
+compatibility_date = "2023-07-02"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "DB"
+# you need a db id for prod here of course.
+database_id = "55444"
+
+
+# run migrations
+# npx wrangler d1 migrations apply DB --local
+
+# to execute SQL commands locally
+# npx wrangler d1 execute DB --local --command "SELECT * FROM user LIMIT 5"
+
+# to run locally
+# npx wrangler dev node_modules/wrangler-proxy/dist/worker.js
+# then run
+# bun run dev
