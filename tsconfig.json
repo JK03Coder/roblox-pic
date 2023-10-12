@@ -10,7 +10,7 @@
 		"sourceMap": true,
 		"strict": true,
 		"types": [
-			"unplugin-icons/types/svelte3"
+			"unplugin-icons/types/svelte"
 		]
 	}
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
