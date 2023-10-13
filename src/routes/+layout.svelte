@@ -1,11 +1,6 @@
-<script land="ts">
+<script lang="ts">
   import '../app.postcss';
-  import { onMount } from 'svelte';
-  import { themeChange } from 'theme-change';
-  import LucideSun from '~icons/lucide/sun';
-  onMount(() => {
-    themeChange(false);
-  });
+  import DarkModeToggle from '$lib/components/DarkModeToggle.svelte';
 </script>
 
 <div class="h-screen flex flex-col">
@@ -14,8 +9,10 @@
       <a href="/" class="font-semibold normal-case text-3xl">RoboGrafx</a>
     </div>
     <div class="flex-none">
-      <LucideSun />
-      <a href="/login" class="btn btn-primary normal-case text-xl">Sign in</a>
+      <a href="/login" class="btn btn-primary normal-case text-xl mr-4"
+        >Sign in</a
+      >
+      <DarkModeToggle />
     </div>
   </nav>
   <main class="flex-grow">

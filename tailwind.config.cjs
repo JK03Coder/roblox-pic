@@ -14,6 +14,7 @@ const config = {
           accent: '#617798',
           neutral: '#242628',
           'base-100': '#d7d9db',
+          '--animation-btn': 0,
         },
         dark: {
           primary: '#3c5b5d',
@@ -21,11 +22,12 @@ const config = {
           accent: '#677d9e',
           neutral: '#242628',
           'base-100': '#242628',
+          '--animation-btn': 0,
         },
       },
     ],
     logs: false,
-    darkTheme: "dark"
+    darkTheme: 'dark',
   },
 
   plugins: [typography, daisyui],
