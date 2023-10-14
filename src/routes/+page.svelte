@@ -1,4 +1,4 @@
-<article class="prose mx-auto">
+<article class="prose mx-auto mt-10">
   <h1>Welcome to Roblox Pic</h1>
 
   <p>
