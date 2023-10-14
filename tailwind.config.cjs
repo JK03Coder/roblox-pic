@@ -9,17 +9,17 @@ const config = {
     themes: [
       {
         light: {
-          primary: '#a2c1c3',
-          secondary: '#e6e6e6',
-          accent: '#617798',
-          neutral: '#242628',
-          'base-100': '#d7d9db',
+          primary: '#78e878',
+          secondary: '#d2f9f9',
+          accent: '#667f66',
+          neutral: '#262626',
+          'base-100': '#ffffff',
           '--animation-btn': 0,
         },
         dark: {
-          primary: '#3c5b5d',
-          secondary: '#1a1a1a',
-          accent: '#677d9e',
+          primary: '#78e878',
+          secondary: '#d2f9f9',
+          accent: '#667f66',
           neutral: '#242628',
           'base-100': '#242628',
           '--animation-btn': 0,
