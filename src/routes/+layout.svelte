@@ -10,7 +10,7 @@
     </div>
     <div class="flex-none">
       <a
-        href="/login"
+        href="/login/roblox"
         class="btn btn-neutral normal-case shadow-md text-xl mr-4"
         draggable="false"><RobloxLogo />Sign in</a
       >

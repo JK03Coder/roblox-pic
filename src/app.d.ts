@@ -14,6 +14,17 @@ declare global {
       };
       caches: CacheStorage & { default: Cache };
     }
+    interface Locals {
+      auth: import('lucia').AuthRequest;
+    }
+  }
+  namespace Lucia {
+    type Auth = import('$lib/server/lucia').Auth;
+    type DatabaseUserAttributes = {
+      username: string;
+      robloxId: string;
+    };
+    type DatabaseSessionAttributes = {};
   }
 }
 
