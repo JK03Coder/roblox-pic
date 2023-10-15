@@ -1,4 +1,4 @@
-import type { Handle } from '@sveltejs/kit';
+import { redirect, type Handle } from '@sveltejs/kit';
 import { dev } from '$app/environment';
 import { connectD1, waitUntil } from 'wrangler-proxy';
 import { initializeLucia } from '$lib/server/lucia';
@@ -26,6 +26,13 @@ export const handle: Handle = async ({ event, resolve }) => {
   if (event.platform) {
     const auth = initializeLucia(event.platform?.env.DB);
     event.locals.auth = auth.handleRequest(event);
+  }
+
+  if (event.url.pathname.startsWith('/dashboard')) {
+    const session = await event.locals.auth.validate();
+    if (!session) {
+      throw redirect(303, '/');
+    }
   }
 
   return resolve(event);

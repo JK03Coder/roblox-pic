@@ -1,3 +1,9 @@
+<script lang="ts">
+  import type { PageData } from './$types';
+
+  export let data: PageData;
+</script>
+
 <div class="hero min-h-full">
   <div class="hero-content flex-col lg:flex-row">
     <div>
@@ -7,7 +13,7 @@
         any scenario for profile pictures, banners, or game icons.
       </p>
       <a
-        href="/login"
+        href={data.isAuth ? "/dashboard" : "/login"}
         class="btn btn-primary"
         draggable="false"
         data-sveltekit-preload-data="hover">Get Started</a

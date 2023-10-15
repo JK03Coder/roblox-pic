@@ -75,7 +75,7 @@ export const GET: RequestHandler = async ({ url, cookies, locals, platform }) =>
 		return new Response(null, {
 			status: 302,
 			headers: {
-				Location: '/'
+				Location: '/dashboard'
 			}
 		});
 	} catch (e) {
