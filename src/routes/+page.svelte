@@ -6,11 +6,17 @@
         This tool allows you to create beautiful renders of Roblox characters in
         any scenario for profile pictures, banners, or game icons.
       </p>
-      <button class="btn btn-primary">Get Started</button>
+      <a
+        href="/login"
+        class="btn btn-primary"
+        draggable="false"
+        data-sveltekit-preload-data="hover">Get Started</a
+      >
     </div>
     <img
-      src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
+      src="temphero.jpg"
       class="max-w-sm rounded-lg shadow-2xl"
+      alt="roblox avatars"
     />
   </div>
 </div>
