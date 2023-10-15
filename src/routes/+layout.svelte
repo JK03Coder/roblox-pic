@@ -15,14 +15,20 @@
     </div>
     <div class="flex-none">
       {#if data.isAuth}
-        <details class="dropdown dropdown-end">
-          <summary class="btn btn-ghost normal-case text-xl mr-4">Hello, {data.username}</summary>
+        <div class="dropdown dropdown-end">
+          <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+          <!-- svelte-ignore a11y-label-has-associated-control -->
+          <label tabindex="0" class="btn btn-ghost normal-case text-xl mr-4"
+            >Hello, {data.username}</label
+          >
+          <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
           <ul
-            class="p-2 shadow menu dropdown-content z-[1] bg-base-200 rounded-box w-52 mr-4 mt-3"
+            tabindex="0"
+            class="p-2 shadow menu dropdown-content z-[1] bg-base-200 text-lg rounded-box w-52 mr-4 mt-3"
           >
             <li><a href="/logout">Logout</a></li>
           </ul>
-        </details>
+        </div>
       {:else}
         <a
           href="/login/roblox"

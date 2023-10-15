@@ -40,6 +40,7 @@
 </svelte:head>
 
 <button
+  type="button"
   class="swap swap-rotate text-2xl"
   on:click={toggle}
   class:swap-active={preference !== 'light'}
