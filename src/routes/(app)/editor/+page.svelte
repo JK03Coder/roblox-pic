@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { PageData } from './$types';
-
-  export let data: PageData;
+  import { Canvas } from '@threlte/core';
+  import { Title, Scene } from '$lib/components';
 </script>
 
-<svelte:head>
-  <title>Roblox Pic | Editor</title>
-</svelte:head>
+<Title name="Editor"/>
 
+<Canvas>
+  <Scene />
+</Canvas>
