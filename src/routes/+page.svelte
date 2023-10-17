@@ -4,6 +4,10 @@
   export let data: PageData;
 </script>
 
+<svelte:head>
+  <title>Roblox Pic</title>
+</svelte:head>
+
 <div class="hero min-h-full">
   <div class="hero-content flex-col lg:flex-row">
     <div>
@@ -13,7 +17,7 @@
         any scenario for profile pictures, banners, or game icons.
       </p>
       <a
-        href={data.isAuth ? "/dashboard" : "/login"}
+        href={data.isAuth ? "/dashboard" : "/login/roblox"}
         class="btn btn-primary"
         draggable="false"
         data-sveltekit-preload-data="hover">Get Started</a

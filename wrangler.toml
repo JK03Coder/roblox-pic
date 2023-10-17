@@ -17,6 +17,6 @@ database_id = "55444"
 # to run locally
 # npx wrangler dev node_modules/wrangler-proxy/dist/worker.js
 # then run
-# bun run dev
+# bun run dev --open
 
 # npm install --package-lock-only
