@@ -1,6 +1,5 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { stringify } from 'postcss';
 
 /*
 request
@@ -95,8 +94,13 @@ export const load = (async (event) => {
 
     const { camera, aabb, mtl, obj } = imageData;
 
+    if (!camera || !aabb || !mtl || !obj) {
+      throw new Error('Invalid data received');
+    }
+
     return { camera, aabb, mtl, obj };
   } catch (error) {
     console.error('Error: ', error);
+    redirect(303, '/dashboard');
   }
 }) satisfies PageServerLoad;
