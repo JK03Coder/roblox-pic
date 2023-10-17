@@ -3,7 +3,6 @@
 declare global {
   namespace App {
     // interface Error {}
-    // interface Locals {}
     // interface PageData {}
     interface Platform {
       env: {
@@ -22,7 +21,6 @@ declare global {
     type Auth = import('$lib/server/lucia').Auth;
     type DatabaseUserAttributes = {
       username: string;
-      robloxId: string;
     };
     type DatabaseSessionAttributes = {};
   }

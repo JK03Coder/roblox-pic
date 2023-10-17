@@ -17,8 +17,7 @@ export const initializeLucia = (db: D1Database|undefined) => {
 
 		getUserAttributes: (data) => {
 			return {
-				username: data.username,
-				robloxId: data.robloxId
+				username: data.username
 			};
 		}
 	});

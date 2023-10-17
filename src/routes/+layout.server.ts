@@ -9,7 +9,7 @@ export const load = (async ({ locals }) => {
   }
   return {
     isAuth: true,
-    robloxId: session.user.robloxId,
+    robloxId: session.user.userId,
     username: session.user.username,
   };
 }) satisfies LayoutServerLoad;

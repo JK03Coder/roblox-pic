@@ -1,7 +1,6 @@
 CREATE TABLE user (
-    id VARCHAR(15) NOT NULL PRIMARY KEY,
-    username VARCHAR(20) NOT NULL,
-    robloxId INT NOT NULL
+    id INT NOT NULL PRIMARY KEY,
+    username VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE user_key (

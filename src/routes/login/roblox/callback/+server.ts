@@ -58,9 +58,9 @@ export const GET: RequestHandler = async ({ url, cookies, locals, platform }) =>
 			if (existingUser) return existingUser;
 
 			const user = await robloxUserAuth.createUser({
+				userId: playerId,
 				attributes: {
-					username: preferred_username,
-					robloxId: playerId
+					username: preferred_username
 				}
 			});
 			return user;

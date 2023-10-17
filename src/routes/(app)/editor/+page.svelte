@@ -1,10 +1,13 @@
 <script lang="ts">
-  import { Canvas } from '@threlte/core';
   import { Title, Scene } from '$lib/components';
+  import type { PageData } from './$types';
+  import { Canvas, T } from '@threlte/core';
+
+  // export let data: PageData;
 </script>
 
-<Title name="Editor"/>
+<Title name="Editor" />
 
 <Canvas>
-  <Scene />
+  
 </Canvas>

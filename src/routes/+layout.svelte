@@ -26,6 +26,7 @@
             tabindex="0"
             class="p-2 shadow menu dropdown-content z-[1] bg-base-200 text-lg rounded-box w-52 mr-4 mt-3"
           >
+            <li><a href="/dashboard">Dashboard</a></li>
             <li><a href="/logout">Logout</a></li>
           </ul>
         </div>
