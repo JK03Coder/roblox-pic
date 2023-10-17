@@ -54,13 +54,14 @@
     const manager = new THREE.LoadingManager();
     manager.setURLModifier((url) => {
       const id = url.split('com/')[1];
-      if (url === get(mtl!)) return get(id);
-      return get(id.split('-')[1]);
+      // if (url === getHashUrl(mtl!)) return getHashUrl(id);
+      // return getHashUrl(id.split('-')[1]);
+      return getHashUrl(id);
     });
 
     const materialLoader = new MTLLoader(manager);
     materialLoader.load(
-      get(mtl!),
+      getHashUrl(mtl!),
       (material) => {
         material.preload();
         for (const key in material.materials) {
@@ -71,7 +72,8 @@
         objectLoader.setMaterials(material);
 
         objectLoader.load(
-          get(obj!.split('-')[1]),
+          // getHashUrl(obj!.split('-')[1]),
+          getHashUrl(obj!),
           (avatar) => {
             avatar.traverse((child) => {
               if (child instanceof THREE.Mesh) {
@@ -123,9 +125,12 @@
     animate();
   });
 
-  function get(hash: string) {
-    for (var i = 31, t = 0; t < 32; t++) i ^= hash[t].charCodeAt(0);
-    return `https://t${(i % 8).toString()}.rbxcdn.com/${hash}`;
+  function getHashUrl(hash: string) {
+    let st = 31;
+    for (let ii = 0; ii < hash.length; ii++) {
+      st ^= hash[ii].charCodeAt(0);
+    }
+    return `https://t${(st % 8).toString()}.rbxcdn.com/${hash}`;
   }
 </script>
 

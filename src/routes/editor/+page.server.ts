@@ -30,6 +30,13 @@ imageUrl response
 }
 */
 
+interface AvatarData {
+  targetId: number;
+  state: string;
+  imageUrl: string;
+  version: string;
+}
+
 export const load = (async (event) => {
   const layoutData = await event.parent();
   if (!layoutData.isAuth) {
@@ -38,30 +45,7 @@ export const load = (async (event) => {
   const rid = layoutData.robloxId;
 
   try {
-    interface AvatarData {
-      targetId: number;
-      state: string;
-      imageUrl: string;
-      version: string;
-    }
-
-    const response = await fetch(
-      `https://thumbnails.roblox.com/v1/users/avatar-3d?userId=${rid}`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      }
-    );
-    const data: AvatarData = await response.json();
-
-    if (data.state !== 'Completed') {
-      throw new Error(
-        'Something went wrong fetching initial avatar request ' +
-          JSON.stringify(data)
-      );
-    }
+    const data: AvatarData = await getAvatarData(rid!, 300);
 
     interface ImageData {
       camera: Camera;
@@ -104,3 +88,32 @@ export const load = (async (event) => {
     redirect(303, '/dashboard');
   }
 }) satisfies PageServerLoad;
+
+async function getAvatarData(
+  rid: string,
+  waitTime: number
+): Promise<AvatarData> {
+  const response = await fetch(
+    `https://thumbnails.roblox.com/v1/users/avatar-3d?userId=${rid}`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+  );
+  const data: AvatarData = await response.json();
+
+  if (data.state === 'Pending') {
+    // Wait for 5 seconds before retrying
+    await new Promise((resolve) => setTimeout(resolve, waitTime));
+    return getAvatarData(rid, waitTime);
+  } else if (data.state !== 'Completed') {
+    throw new Error(
+      'Something went wrong fetching initial avatar request ' +
+        JSON.stringify(data)
+    );
+  }
+
+  return data;
+}
