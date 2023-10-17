@@ -28,7 +28,9 @@ export const handle: Handle = async ({ event, resolve }) => {
     event.locals.auth = auth.handleRequest(event);
   }
 
-  if (event.route.id?.includes('/(app)')) {
+  const protectedRoutes = ['/dashboard', '/editor']
+
+  if (protectedRoutes.some( path => event.url.pathname.startsWith(path))) {
     const session = await event.locals.auth.validate();
     if (!session) {
       throw redirect(303, '/');
