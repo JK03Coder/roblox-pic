@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import * as THREE from 'three';
-  import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
   import { onMount } from 'svelte';
+  import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
   import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
   import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
@@ -54,8 +54,6 @@
     const manager = new THREE.LoadingManager();
     manager.setURLModifier((url) => {
       const id = url.split('com/')[1];
-      // if (url === getHashUrl(mtl!)) return getHashUrl(id);
-      // return getHashUrl(id.split('-')[1]);
       return getHashUrl(id);
     });
 
@@ -72,7 +70,6 @@
         objectLoader.setMaterials(material);
 
         objectLoader.load(
-          // getHashUrl(obj!.split('-')[1]),
           getHashUrl(obj!),
           (avatar) => {
             avatar.traverse((child) => {
