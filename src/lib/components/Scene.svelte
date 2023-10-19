@@ -2,9 +2,9 @@
   import { T, useLoader, useThrelte } from '@threlte/core';
   import { OrbitControls } from '@threlte/extras';
   import type { Camera, AABB } from '$lib/types';
-  import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-  import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
-  import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
+  import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+  import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
+  import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
   import * as THREE from 'three';
 
   export let camera: Camera;
