@@ -5,7 +5,7 @@
   import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
   import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
   import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-  import * as THREE from 'three';
+  import * as THREE from 'three'
 
   export let camera: Camera;
   export let aabb: AABB;
