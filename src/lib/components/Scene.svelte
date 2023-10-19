@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { T, useLoader } from '@threlte/core';
-  import { OrbitControls, Environment } from '@threlte/extras';
+  import { T, useLoader, useThrelte } from '@threlte/core';
+  import { OrbitControls } from '@threlte/extras';
   import type { Camera, AABB } from '$lib/types';
-  import * as THREE from 'three';
   import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
   import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+  import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
+  import * as THREE from 'three';
 
   export let camera: Camera;
   export let aabb: AABB;
@@ -19,14 +20,62 @@
     return `https://t${(st % 8).toString()}.rbxcdn.com/${hash}`;
   }
 
-  const materials = useLoader(MTLLoader).load(getHashUrl(mtl));
-  const model = useLoader(OBJLoader).load(getHashUrl(obj));
+  const { load } = useLoader(MTLLoader, {
+    extend: (loader) => {
+      loader.manager.setURLModifier((url) => {
+        if (!url.includes('rbxcdn.com/')) return url;
+        const id = url.split('com/')[1];
+        return getHashUrl(id);
+      });
+    },
+  });
+
+  const avatar = useLoader(OBJLoader, {
+    extend: async (loader) => {
+      loader.setMaterials(await load(getHashUrl(mtl)));
+    },
+  }).load(getHashUrl(obj), {
+    transform: (object) => {
+      object.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          const shinyMaterial = new THREE.MeshStandardMaterial({
+            map: child.material.map,
+            color: 0xffffff,
+            roughness: 0.0,
+            metalness: 0.2,
+          });
+
+          child.material = shinyMaterial;
+        }
+      });
+      return object;
+    },
+  });
+
+  const { scene, renderer } = useThrelte();
+
+  const pmremGenerator = new THREE.PMREMGenerator(renderer);
+  pmremGenerator.compileEquirectangularShader();
+
+  new RGBELoader()
+    .setDataType(THREE.HalfFloatType)
+    .load('/studio.hdr', function (texture) {
+      const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+      // scene.background = envMap;
+      scene.environment = envMap;
+      texture.dispose();
+      pmremGenerator.dispose();
+    });
 </script>
+
+{#if $avatar}
+  <T is={$avatar} rotation.y={Math.PI}/>
+{/if}
 
 <T.PerspectiveCamera
   makeDefault
   fov={camera.fov ?? 70}
-  position={[camera.position.x, camera.position.y, camera.position.z]}
+  position={[-camera.position.x, camera.position.y, -camera.position.z]}
   on:create={({ ref }) => {
     ref.lookAt(
       (aabb.min.x + aabb.max.x) / 2,
@@ -47,23 +96,3 @@
     }}
   />
 </T.PerspectiveCamera>
-
-{#if $model}
-  <T is={$model} >
-    {#if $materials}
-      <T is={$materials} />
-    {/if}
-  </T>
-{/if}
-
-<Environment
-  path="/"
-  files="studio.hdr"
-  isBackground={true}
-  format="hdr"
-  groundProjection={{
-    radius: 200,
-    height: 5,
-    scale: { x: 100, y: 100, z: 100 },
-  }}
-/>

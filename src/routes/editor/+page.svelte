@@ -62,9 +62,9 @@
       getHashUrl(mtl!),
       (material) => {
         material.preload();
-        for (const key in material.materials) {
-          material.materials[key].transparent = false;
-        }
+        // for (const key in material.materials) {
+        //   material.materials[key].transparent = false;
+        // }
 
         const objectLoader = new OBJLoader();
         objectLoader.setMaterials(material);
