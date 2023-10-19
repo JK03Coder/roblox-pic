@@ -4,7 +4,7 @@ import Icons from 'unplugin-icons/vite';
 
 export default defineConfig({
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js', '.ts', '.mjs', '.json']
   },
   plugins: [
     sveltekit(),
