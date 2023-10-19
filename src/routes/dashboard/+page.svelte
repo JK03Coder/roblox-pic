@@ -14,5 +14,4 @@
   <p>Roblox ID: {data.robloxId}</p>
 
   <a href="/editor" class="btn btn-primary"> Editor </a>
-  <a href="/editorv2" class="btn btn-primary mt-2"> Editor V2</a>
 </main>

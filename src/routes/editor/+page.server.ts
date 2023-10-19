@@ -1,5 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import type { AvatarData, ImageData } from '$lib/types';
 
 /*
 request
@@ -30,13 +31,6 @@ imageUrl response
 }
 */
 
-interface AvatarData {
-  targetId: number;
-  state: string;
-  imageUrl: string;
-  version: string;
-}
-
 export const load = (async (event) => {
   const layoutData = await event.parent();
   if (!layoutData.isAuth) {
@@ -47,36 +41,11 @@ export const load = (async (event) => {
   try {
     const data: AvatarData = await getAvatarData(rid!, 300);
 
-    interface ImageData {
-      camera: Camera;
-      aabb: AABB;
-      mtl: string;
-      obj: string;
-      textures: string[];
-    }
-
-    interface AABB {
-      min: Max;
-      max: Max;
-    }
-
-    interface Max {
-      x: number;
-      y: number;
-      z: number;
-    }
-
-    interface Camera {
-      position: Max;
-      direction: Max;
-      fov: number;
-    }
-
     const imageUrl = data.imageUrl;
     const imageResponse = await fetch(imageUrl);
     const imageData: ImageData = await imageResponse.json();
 
-    const { camera, aabb, mtl, obj } = imageData;
+    const { camera, aabb, mtl, obj }: ImageData = imageData;
 
     if (!camera || !aabb || !mtl || !obj) {
       throw new Error('Invalid data received');
