@@ -25,7 +25,7 @@
     </div>
     <img
       src="temphero.jpg"
-      class="max-w-sm rounded-lg shadow-2xl"
+      class="sm:max-w-sm rounded-lg shadow-2xl"
       alt="roblox avatars"
     />
   </div>

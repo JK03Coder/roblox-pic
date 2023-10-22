@@ -41,7 +41,7 @@
 
 <button
   type="button"
-  class="swap swap-rotate text-2xl"
+  class="swap swap-rotate text-2xl hidden lg:grid"
   on:click={toggle}
   class:swap-active={preference !== 'light'}
 >

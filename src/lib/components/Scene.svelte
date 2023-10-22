@@ -20,7 +20,7 @@
     return `https://t${(st % 8).toString()}.rbxcdn.com/${hash}`;
   }
 
-  const { load } = useLoader(MTLLoader, {
+  const { load: loadMTL } = useLoader(MTLLoader, {
     extend: (loader) => {
       loader.manager.setURLModifier((url) => {
         if (!url.includes('rbxcdn.com/')) return url;
@@ -30,11 +30,14 @@
     },
   });
 
-  const avatar = useLoader(OBJLoader, {
+  const { load: loadOBJ } = useLoader(OBJLoader, {
     extend: async (loader) => {
-      loader.setMaterials(await load(getHashUrl(mtl)));
+      const mats = await loadMTL(getHashUrl(mtl))
+      loader.setMaterials(mats);
     },
-  }).load(getHashUrl(obj), {
+  })
+  
+  const avatar = loadOBJ(getHashUrl(obj), {
     transform: (object) => {
       object.traverse((child) => {
         if (child instanceof THREE.Mesh) {
@@ -86,7 +89,7 @@
 >
   <OrbitControls
     enableDamping
-    enablePan={false}
+    enablePan={true}
     on:create={({ ref }) => {
       ref.target.set(
         (aabb.min.x + aabb.max.x) / 2,
