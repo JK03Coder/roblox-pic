@@ -9,7 +9,7 @@
 <div class="h-screen flex flex-col">
   <nav class="navbar bg-base-200 px-4 sticky top-0 z-50 shadow-md">
     <div class="flex-1">
-      <a href="/" class="font-semibold normal-case text-sm lg:text-2xl" draggable="false"
+      <a href="/" class="font-semibold normal-case text-md lg:text-2xl" draggable="false"
         >RoboGrafx</a
       >
     </div>
@@ -18,7 +18,7 @@
         <div class="dropdown dropdown-end">
           <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
           <!-- svelte-ignore a11y-label-has-associated-control -->
-          <label tabindex="0" class="btn btn-ghost normal-case text-xs lg:text-lg lg:mr-4"
+          <label tabindex="0" class="btn btn-ghost normal-case text-sm lg:text-lg lg:mr-4"
             >Hello, {data.username}</label
           >
           <!-- svelte-ignore a11y-no-noninteractive-tabindex -->

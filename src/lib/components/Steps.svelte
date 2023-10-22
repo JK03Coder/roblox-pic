@@ -4,34 +4,48 @@
   import LucideCheckSquare from '~icons/lucide/check-square';
 
   export let step = 0;
+
+  function setStep(newStep: number) {
+    step = newStep;
+  }
 </script>
 
 <ul class="steps">
-  <li data-content="" class="step step-neutral text-neutral-200">
-    <LucideCamera class="relative -top-[1.925rem] z-10 text-lg" />
-  </li>
-  <li
+  <button
+    type="button"
+    aria-label="camera step"
+    on:click={() => {
+      setStep(0);
+    }}
+    data-content=""
+    class="step step-neutral text-neutral-200"
+  >
+    <LucideCamera class="z-10 text-lg col-start-1 row-start-1" />
+  </button>
+  <button
+    type="button"
+    aria-label="background step"
+    on:click={() => {
+      setStep(1);
+    }}
     data-content=""
     class="step"
     class:step-neutral={step >= 1}
     class:text-neutral-200={step >= 1}
   >
-    <LucideImage class="relative -top-[1.925rem] z-10 text-lg" />
-  </li>
-  <li
+    <LucideImage class="z-10 text-lg col-start-1 row-start-1" />
+  </button>
+  <button
+    type="button"
+    aria-label="final step"
+    on:click={() => {
+      setStep(2);
+    }}
     data-content=""
     class="step"
     class:step-neutral={step >= 2}
     class:text-neutral-200={step >= 2}
   >
-    <LucideCheckSquare class="relative -top-[1.925rem] z-10 text-lg" />
-  </li>
+    <LucideCheckSquare class="z-10 text-lg col-start-1 row-start-1" />
+  </button>
 </ul>
-
-<style>
-  .steps .step svg {
-    z-index: 2;
-    grid-column-start: 1;
-    grid-row-start: 1;
-  }
-</style>
