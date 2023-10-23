@@ -1,14 +1,17 @@
 <script lang="ts">
   import { T, useLoader, useThrelte } from '@threlte/core';
   import { OrbitControls } from '@threlte/extras';
-  import type { Camera, AABB } from '$lib/types';
+  import type { Camera, AABB, CameraSettings } from '$lib/types';
   import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
   import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
   import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-  import * as THREE from 'three'
+  import * as THREE from 'three';
+  import { cameraSettings, dampingFactor } from '$lib/stores';
 
   export let camera: Camera;
   export let aabb: AABB;
+  const initCamSettings: CameraSettings = { camera, aabb };
+  $cameraSettings = initCamSettings;
   export let mtl: string;
   export let obj: string;
 
@@ -32,11 +35,11 @@
 
   const { load: loadOBJ } = useLoader(OBJLoader, {
     extend: async (loader) => {
-      const mats = await loadMTL(getHashUrl(mtl))
+      const mats = await loadMTL(getHashUrl(mtl));
       loader.setMaterials(mats);
     },
-  })
-  
+  });
+
   const avatar = loadOBJ(getHashUrl(obj), {
     transform: (object) => {
       object.traverse((child) => {
@@ -72,29 +75,36 @@
 </script>
 
 {#if $avatar}
-  <T is={$avatar} rotation.y={Math.PI}/>
+  <T is={$avatar} rotation.y={Math.PI} />
 {/if}
 
 <T.PerspectiveCamera
   makeDefault
-  fov={camera.fov ?? 70}
-  position={[-camera.position.x, camera.position.y, -camera.position.z]}
+  fov={$cameraSettings.camera.fov ?? 70}
+  position={[
+    -$cameraSettings.camera.position.x,
+    $cameraSettings.camera.position.y,
+    -$cameraSettings.camera.position.z,
+  ]}
   on:create={({ ref }) => {
     ref.lookAt(
-      (aabb.min.x + aabb.max.x) / 2,
-      (aabb.max.y + aabb.min.y) / 2,
-      (aabb.max.z + aabb.min.z) / 2
+      ($cameraSettings.aabb.min.x + $cameraSettings.aabb.max.x) / 2,
+      ($cameraSettings.aabb.max.y + $cameraSettings.aabb.min.y) / 2,
+      ($cameraSettings.aabb.max.z + $cameraSettings.aabb.min.z) / 2
     );
   }}
 >
   <OrbitControls
     enableDamping
+    dampingFactor={$dampingFactor}
     enablePan={true}
+    minDistance={1}
+    maxDistance={110}
     on:create={({ ref }) => {
       ref.target.set(
-        (aabb.min.x + aabb.max.x) / 2,
-        (aabb.max.y + aabb.min.y) / 2,
-        (aabb.max.z + aabb.min.z) / 2
+        ($cameraSettings.aabb.min.x + $cameraSettings.aabb.max.x) / 2,
+        ($cameraSettings.aabb.max.y + $cameraSettings.aabb.min.y) / 2,
+        ($cameraSettings.aabb.max.z + $cameraSettings.aabb.min.z) / 2
       );
     }}
   />

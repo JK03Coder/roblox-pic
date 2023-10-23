@@ -45,6 +45,7 @@
     class="step"
     class:step-neutral={step >= 2}
     class:text-neutral-200={step >= 2}
+    disabled={step < 1}
   >
     <LucideSlidersHorizontal class="z-10 text-lg col-start-1 row-start-1" />
   </button>

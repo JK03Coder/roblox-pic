@@ -2,17 +2,40 @@
   import type { PageData } from './$types';
   import { Canvas } from '@threlte/core';
   import { Scene, Steps } from '$lib/components';
+  import { Title } from '$lib/components';
 
   import LucideMouse from '~icons/lucide/mouse';
   import LucideMousePointerSquare from '~icons/lucide/mouse-pointer-square';
   import LucideMousePointerSquareDashed from '~icons/lucide/mouse-pointer-square-dashed';
+  import type { CameraSettings } from '$lib/types';
+  import { onMount } from 'svelte';
+  import { cameraSettings, dampingFactor } from '$lib/stores';
 
   export let data: PageData;
 
+  let step = 0;
+
   let { camera, aabb, mtl, obj } = data;
 
-  let step = 0;
+  let camSettingsArray: CameraSettings[] = [];
+
+  onMount(() => {
+    if (camera && aabb) camSettingsArray.push({ camera, aabb });
+  });
+
+  function handleCameraPreset(type: string | undefined = undefined) {
+    switch (type) {
+      case 'bust':
+        break;
+      case 'mug':
+        break;
+      default:
+        cameraSettings.set(camSettingsArray[0]);
+    }
+  }
 </script>
+
+<Title name="Editor" />
 
 <div
   class="flex flex-col lg:flex-row items-center lg:justify-center h-full gap-2 lg:gap-8 p-8"
@@ -46,10 +69,26 @@
         </ul>
         <div class="divider">Presets</div>
         <div class="grid grid-cols-3 gap-2">
-          <button class="btn btn-ghost">Default</button>
-          <button class="btn btn-ghost">Mug</button>
-          <button class="btn btn-ghost">Bust</button>
+          <button
+            class="btn bg-base-100"
+            on:click={() => {
+              handleCameraPreset();
+            }}>Default</button
+          >
+          <button
+            class="btn bg-base-100"
+            on:click={() => {
+              handleCameraPreset();
+            }}>Mug</button
+          >
+          <button
+            class="btn bg-base-100"
+            on:click={() => {
+              handleCameraPreset();
+            }}>Bust</button
+          >
         </div>
+        <input type="range" min="0.05" max="1.0" step="0.01" bind:value={$dampingFactor} />
       </div>
       <div class="card-actions justify-between">
         <button

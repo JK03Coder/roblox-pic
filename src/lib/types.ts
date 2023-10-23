@@ -29,3 +29,8 @@ export interface Camera {
   direction: Vec3;
   fov: number;
 }
+
+export interface CameraSettings {
+  camera: Camera;
+  aabb: AABB;
+}
