@@ -5,8 +5,11 @@
   import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
   import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
   import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
+  import type { OrbitControls as OrbitControlsType } from 'three/examples/jsm/controls/OrbitControls.js';
+
   import * as THREE from 'three';
   import { cameraSettings, dampingFactor } from '$lib/stores';
+  import { onMount } from 'svelte';
 
   export let camera: Camera;
   export let aabb: AABB;
@@ -14,6 +17,24 @@
   $cameraSettings = initCamSettings;
   export let mtl: string;
   export let obj: string;
+
+  let perspectiveCameraRef: THREE.PerspectiveCamera;
+  let orbitControlsRef: OrbitControlsType;
+
+  onMount(() => {
+    cameraSettings.subscribe((newSettings) => {
+      perspectiveCameraRef.lookAt(
+        (newSettings.aabb.min.x + newSettings.aabb.max.x) / 2,
+        (newSettings.aabb.max.y + newSettings.aabb.min.y) / 2,
+        (newSettings.aabb.max.z + newSettings.aabb.min.z) / 2
+      );
+      orbitControlsRef.target.set(
+        (newSettings.aabb.min.x + newSettings.aabb.max.x) / 2,
+        (newSettings.aabb.max.y + newSettings.aabb.min.y) / 2,
+        (newSettings.aabb.max.z + newSettings.aabb.min.z) / 2
+      );
+    });
+  });
 
   function getHashUrl(hash: string) {
     let st = 31;
@@ -87,6 +108,7 @@
     -$cameraSettings.camera.position.z,
   ]}
   on:create={({ ref }) => {
+    perspectiveCameraRef = ref;
     ref.lookAt(
       ($cameraSettings.aabb.min.x + $cameraSettings.aabb.max.x) / 2,
       ($cameraSettings.aabb.max.y + $cameraSettings.aabb.min.y) / 2,
@@ -101,6 +123,7 @@
     minDistance={1}
     maxDistance={110}
     on:create={({ ref }) => {
+      orbitControlsRef = ref;
       ref.target.set(
         ($cameraSettings.aabb.min.x + $cameraSettings.aabb.max.x) / 2,
         ($cameraSettings.aabb.max.y + $cameraSettings.aabb.min.y) / 2,
