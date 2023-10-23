@@ -17,20 +17,67 @@
 
   let { camera, aabb, mtl, obj } = data;
 
-  let camSettingsArray: CameraSettings[] = [];
+  let initCamSettings: CameraSettings;
 
   onMount(() => {
-    if (camera && aabb) camSettingsArray.push({ camera, aabb });
+    if (camera && aabb) {
+      initCamSettings = { camera, aabb };
+    }
   });
 
   function handleCameraPreset(type: string | undefined = undefined) {
     switch (type) {
       case 'bust':
+        cameraSettings.set({
+          camera: {
+            ...initCamSettings.camera,
+            position: {
+              x: 0.0,
+              y: 104.0,
+              z: -4.0,
+            },
+          },
+          aabb: {
+            min: {
+              x: -1.5,
+              y: 104.0,
+              z: -1.0,
+            },
+            max: {
+              x: 1.5,
+              y: 104.0,
+              z: 1.0,
+            },
+          },
+        });
         break;
       case 'mug':
+        cameraSettings.set({
+          camera: {
+            ...initCamSettings.camera,
+            position: {
+              x: -1.37704,
+              y: 104.044,
+              z: -1.68909,
+            },
+          },
+          aabb: {
+            min: {
+              x: -1.50447,
+              y: 103.9437,
+              z: -0.795158,
+            },
+            max: {
+              x: 1.55444,
+              y: 104.324,
+              z: 1.06602,
+            },
+          },
+        });
         break;
       default:
-        cameraSettings.set(camSettingsArray[0]);
+        cameraSettings.set(initCamSettings);
+        break;
     }
   }
 </script>
@@ -78,17 +125,16 @@
           <button
             class="btn bg-base-100"
             on:click={() => {
-              handleCameraPreset();
-            }}>Mug</button
+              handleCameraPreset('bust');
+            }}>Bust</button
           >
           <button
             class="btn bg-base-100"
             on:click={() => {
-              handleCameraPreset();
-            }}>Bust</button
+              handleCameraPreset('mug');
+            }}>Mug</button
           >
         </div>
-        <!-- <input type="range" min="0.05" max="1.0" step="0.01" bind:value={$dampingFactor} /> {$dampingFactor} -->
       </div>
       <div class="card-actions justify-between">
         <button
