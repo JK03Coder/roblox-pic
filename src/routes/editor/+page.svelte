@@ -9,7 +9,7 @@
   import LucideMousePointerSquareDashed from '~icons/lucide/mouse-pointer-square-dashed';
   import type { CameraSettings } from '$lib/types';
   import { onMount } from 'svelte';
-  import { cameraSettings, dampingFactor } from '$lib/stores';
+  import { cameraSettings } from '$lib/stores';
 
   export let data: PageData;
 
@@ -88,7 +88,7 @@
             }}>Bust</button
           >
         </div>
-        <input type="range" min="0.05" max="1.0" step="0.01" bind:value={$dampingFactor} />
+        <!-- <input type="range" min="0.05" max="1.0" step="0.01" bind:value={$dampingFactor} /> {$dampingFactor} -->
       </div>
       <div class="card-actions justify-between">
         <button

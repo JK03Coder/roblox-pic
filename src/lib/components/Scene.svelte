@@ -8,7 +8,7 @@
   import type { OrbitControls as OrbitControlsType } from 'three/examples/jsm/controls/OrbitControls.js';
 
   import * as THREE from 'three';
-  import { cameraSettings, dampingFactor } from '$lib/stores';
+  import { cameraSettings } from '$lib/stores';
   import { onMount } from 'svelte';
 
   export let camera: Camera;
@@ -118,7 +118,7 @@
 >
   <OrbitControls
     enableDamping
-    dampingFactor={$dampingFactor}
+    dampingFactor={0.3}
     enablePan={true}
     minDistance={1}
     maxDistance={110}
