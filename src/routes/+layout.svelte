@@ -2,9 +2,12 @@
   import '../app.postcss';
   import type { LayoutData } from './$types';
   import { DarkModeToggle, RobloxLogo } from '$lib/components';
+  import Toast from 'svelte-daisy-toast';
 
   export let data: LayoutData;
 </script>
+
+<Toast position="top-end" />
 
 <div class="h-screen flex flex-col">
   <nav class="navbar bg-base-200 px-4 sticky top-0 z-50 shadow-md">

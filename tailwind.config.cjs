@@ -3,7 +3,10 @@ const typography = require('@tailwindcss/typography');
 
 /** @type {import('tailwindcss').Config}*/
 const config = {
-  content: ['./src/**/*.{html,js,svelte,ts}'],
+  content: [
+    './src/**/*.{html,js,svelte,ts}',
+    './node_modules/svelte-daisy-toast/dist/**/*.{js,svelte}',
+  ],
 
   daisyui: {
     themes: [
@@ -13,6 +16,7 @@ const config = {
           secondary: '#d2f9f9',
           accent: '#667f66',
           neutral: '#393b3d',
+          success: '#78e878',
           'base-100': '#ffffff',
           '--animation-btn': 0,
         },
@@ -21,6 +25,7 @@ const config = {
           secondary: '#d2f9f9',
           accent: '#667f66',
           neutral: '#393b3d',
+          success: '#78e878',
           'base-100': '#242628',
           '--animation-btn': 0,
         },

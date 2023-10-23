@@ -38,6 +38,7 @@
     "@threlte/extras": "^7.3.0",
     "@types/three": "^0.157.2",
     "lucia": "^2.7.1",
+    "svelte-daisy-toast": "^0.0.2",
     "three": "^0.157.0"
   }
 }
