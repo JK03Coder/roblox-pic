@@ -1,7 +1,7 @@
 <script lang="ts">
   import LucideCamera from '~icons/lucide/camera';
   import LucideImage from '~icons/lucide/image';
-  import LucideCheckSquare from '~icons/lucide/check-square';
+  import LucideSlidersHorizontal from '~icons/lucide/sliders-horizontal'
 
   export let step = 0;
 
@@ -46,6 +46,6 @@
     class:step-neutral={step >= 2}
     class:text-neutral-200={step >= 2}
   >
-    <LucideCheckSquare class="z-10 text-lg col-start-1 row-start-1" />
+    <LucideSlidersHorizontal class="z-10 text-lg col-start-1 row-start-1" />
   </button>
 </ul>
