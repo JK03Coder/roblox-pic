@@ -4,6 +4,7 @@
   import { Scene, Steps } from '$lib/components';
   import { Title, Background, CameraControls } from '$lib/components';
   import { orbitControlsRef } from '$lib/stores';
+  import type { SvelteComponent } from 'svelte';
 
   export let data: PageData;
 
@@ -17,6 +18,13 @@
 
   let { camera, aabb, mtl, obj } = data;
 
+  let mainScene: SvelteComponent;
+
+  function callGetDataURL() {
+    if (!mainScene) return
+    return mainScene.getDataURL();
+  }
+
   const tabTitle = ['Camera Controls', 'Background Gradient', 'Final step'];
 </script>
 
@@ -25,14 +33,12 @@
 <div
   class="flex flex-col lg:flex-row items-center lg:justify-center h-full gap-2 lg:gap-8 p-8"
 >
-  <div
-    class="relative w-[45vh] h-[45vh] lg:w-[45vw] lg:h-[45vw] shadow-xl"
-  >
+  <div class="relative w-[45vh] h-[45vh] lg:w-[45vw] lg:h-[45vw] shadow-xl">
     {#if camera && aabb && mtl && obj}
-      <Canvas>
-        <Scene {camera} {aabb} {mtl} {obj} />
+      <Canvas rendererParameters={{ preserveDrawingBuffer: true }}>
+        <Scene {camera} {aabb} {mtl} {obj} bind:this={mainScene} />
       </Canvas>
-      <Background />
+      <Background getDataURL={callGetDataURL} />
     {:else}
       <h1>Something went wrong</h1>
     {/if}
@@ -44,6 +50,9 @@
       <div class="flex-1">
         {#if camera && aabb && step === 0}
           <CameraControls {camera} {aabb} />
+        {/if}
+        {#if step === 1}
+          <a href={callGetDataURL()} class="btn btn-link">download</a>
         {/if}
       </div>
       <div class="card-actions justify-between">

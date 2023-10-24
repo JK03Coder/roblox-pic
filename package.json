@@ -17,6 +17,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "autoprefixer": "^10.4.16",
     "daisyui": "^3.9.3",
+    "fast-average-color": "^9.4.0",
     "postcss": "^8.4.31",
     "postcss-load-config": "^4.0.1",
     "svelte": "^4.2.2",

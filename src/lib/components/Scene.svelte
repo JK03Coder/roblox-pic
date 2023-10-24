@@ -90,6 +90,10 @@
       texture.dispose();
       pmremGenerator.dispose();
     });
+
+  export function getDataURL() {
+    return renderer.domElement.toDataURL("image/png", 1.0);
+  }
 </script>
 
 {#if $avatar}
