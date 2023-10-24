@@ -5,10 +5,17 @@
   import { Canvas } from '@threlte/core';
   import { Scene, Steps } from '$lib/components';
   import { Title } from '$lib/components';
+  import { orbitControlsRef } from '$lib/stores';
 
   export let data: PageData;
 
   let step = 0;
+
+  $: if (step === 0) {
+    $orbitControlsRef.enabled = true;
+  } else {
+    $orbitControlsRef.enabled = false;
+  }
 
   let { camera, aabb, mtl, obj } = data;
 
@@ -37,7 +44,6 @@
         {#if camera && aabb && step === 0}
           <CameraControls {camera} {aabb} />
         {/if}
-        
       </div>
       <div class="card-actions justify-between">
         <button
