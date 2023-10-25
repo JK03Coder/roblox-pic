@@ -29,9 +29,7 @@
 >
   <div class="bg-base-200 w-[45vh] h-[45vh] lg:w-[45vw] lg:h-[45vw] shadow-xl">
     {#if camera && aabb && mtl && obj}
-      <Canvas>
-        <Scene {camera} {aabb} {mtl} {obj} />
-      </Canvas>
+      <Scene {camera} {aabb} {mtl} {obj} />
     {:else}
       <h1>Something went wrong</h1>
     {/if}
