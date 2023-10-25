@@ -12,9 +12,9 @@
   let step = 0;
 
   $: if (step === 0) {
-    $orbitControlsRef.enabled = true;
+    if ($orbitControlsRef) $orbitControlsRef.enabled = true;
   } else {
-    $orbitControlsRef.enabled = false;
+    if ($orbitControlsRef) $orbitControlsRef.enabled = false;
   }
 
   let { camera, aabb, mtl, obj } = data;
