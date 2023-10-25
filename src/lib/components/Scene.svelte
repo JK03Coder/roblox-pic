@@ -27,11 +27,11 @@
       antialias: true,
       canvas: canvReference,
       alpha: true,
-      preserveDrawingBuffer: true,
     });
     renderer.setSize(canvReference.offsetWidth, canvReference.offsetHeight);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
-    const sceneCamera = new THREE.PerspectiveCamera(camera.fov, 1 / 1, 1, 100);
+    const sceneCamera = new THREE.PerspectiveCamera(camera.fov, 1 / 1, 1, 120);
     sceneCamera.position.set(
       camera.position.x,
       camera.position.y,
@@ -108,7 +108,6 @@
               }
             });
             avatar.rotation.y = Math.PI;
-            avatar.position.z = -1.45;
             scene.add(avatar);
           },
           undefined,
