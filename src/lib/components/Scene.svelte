@@ -16,8 +16,11 @@
   export let obj: string;
 
   let canvReference: HTMLCanvasElement;
+  let parent: HTMLElement;
 
   onMount(() => {
+    parent = canvReference.parentElement!;
+
     const scene = new THREE.Scene();
 
     const renderer = new THREE.WebGLRenderer({
@@ -26,7 +29,7 @@
       alpha: true,
       preserveDrawingBuffer: true,
     });
-    // renderer.setSize(canvReference.offsetWidth, canvReference.offsetHeight);
+    renderer.setSize(canvReference.offsetWidth, canvReference.offsetHeight);
 
     const sceneCamera = new THREE.PerspectiveCamera(camera.fov, 1 / 1, 1, 100);
     sceneCamera.position.set(
@@ -108,19 +111,15 @@
             avatar.position.z = -1.45;
             scene.add(avatar);
           },
-          (xhr) => {
-            console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-          },
+          undefined,
           (error) => {
-            console.log('An error happened: ', error);
+            console.log('An error happened loading the object resource: ', error);
           }
         );
       },
-      (xhr) => {
-        console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-      },
+      undefined,
       (error) => {
-        console.log('An error happened: ', error);
+        console.log('An error happened loading the material resource: ', error);
       }
     );
 
@@ -143,6 +142,10 @@
       renderer.render(scene, sceneCamera);
     }
     animate();
+
+    window.addEventListener('resize', () => {
+      renderer.setSize(parent.offsetWidth, parent.offsetHeight);
+    });
   });
 
   function getHashUrl(hash: string) {
