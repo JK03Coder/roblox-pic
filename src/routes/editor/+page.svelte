@@ -1,9 +1,6 @@
 <script lang="ts">
-  import CameraControls from '../../lib/components/CameraControls.svelte';
-
   import type { PageData } from './$types';
-  import { Canvas } from '@threlte/core';
-  import { Scene, Steps } from '$lib/components';
+  import { Scene, Steps, CameraControls } from '$lib/components';
   import { Title } from '$lib/components';
   import { orbitControlsRef } from '$lib/stores';
 

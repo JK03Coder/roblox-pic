@@ -15,26 +15,20 @@
   export let mtl: string;
   export let obj: string;
 
-  let canvReference: HTMLElement;
+  let canvReference: HTMLCanvasElement;
 
   onMount(() => {
     const scene = new THREE.Scene();
-
-    const sceneCamera = new THREE.PerspectiveCamera(
-      camera.fov,
-      canvReference.offsetWidth / canvReference.offsetHeight,
-      1,
-      100
-    );
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       canvas: canvReference,
       alpha: true,
+      preserveDrawingBuffer: true,
     });
-    renderer.setSize(canvReference.offsetWidth, canvReference.offsetHeight);
-    canvReference = renderer.domElement;
+    // renderer.setSize(canvReference.offsetWidth, canvReference.offsetHeight);
 
+    const sceneCamera = new THREE.PerspectiveCamera(camera.fov, 1 / 1, 1, 100);
     sceneCamera.position.set(
       camera.position.x,
       camera.position.y,
@@ -47,14 +41,36 @@
     );
 
     const controls = new OrbitControls(sceneCamera, renderer.domElement);
+    orbitControlsRef.set(controls);
     controls.target.set(
       (aabb.min.x + aabb.max.x) / 2,
       (aabb.max.y + aabb.min.y) / 2,
       (aabb.max.z + aabb.min.z) / 2
     );
     controls.update();
-    controls.enablePan = false;
+    controls.enablePan = true;
     controls.enableDamping = true;
+    controls.dampingFactor = 0.3;
+    controls.minDistance = 1;
+    controls.maxDistance = 110;
+
+    cameraSettings.subscribe((newSettings) => {
+      sceneCamera.position.set(
+        -newSettings.camera.position.x,
+        newSettings.camera.position.y,
+        -newSettings.camera.position.z
+      );
+      sceneCamera.lookAt(
+        (newSettings.aabb.min.x + newSettings.aabb.max.x) / 2,
+        (newSettings.aabb.max.y + newSettings.aabb.min.y) / 2,
+        (newSettings.aabb.max.z + newSettings.aabb.min.z) / 2
+      );
+      $orbitControlsRef.target.set(
+        (newSettings.aabb.min.x + newSettings.aabb.max.x) / 2,
+        (newSettings.aabb.max.y + newSettings.aabb.min.y) / 2,
+        (newSettings.aabb.max.z + newSettings.aabb.min.z) / 2
+      );
+    });
 
     const manager = new THREE.LoadingManager();
     manager.setURLModifier((url) => {
@@ -85,11 +101,11 @@
                   roughness: 0.0,
                   metalness: 0.2,
                 });
-
                 child.material = shinyMaterial;
               }
             });
-
+            avatar.rotation.y = Math.PI;
+            avatar.position.z = -1.45;
             scene.add(avatar);
           },
           (xhr) => {
@@ -138,6 +154,6 @@
   }
 </script>
 
-<canvas bind:this={canvReference} class="w-full h-full">
+<canvas bind:this={canvReference} class="block w-full h-full">
   Your browser does not support HTML5 Canvas
 </canvas>

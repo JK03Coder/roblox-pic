@@ -1,4 +1,4 @@
-import { tick } from "svelte";
+import { tick } from 'svelte';
 
 // don't forget to add the view-transition-name css property to the transitioning elements
 export function executeViewTransition(callback: Function) {
