@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { afterUpdate } from 'svelte';
+  import { onMount } from 'svelte';
   import { FastAverageColor } from 'fast-average-color';
 
   export let getDataURL: Function;
@@ -7,36 +7,38 @@
   const fac = new FastAverageColor();
 
   let background: HTMLCanvasElement;
+  let ctx: CanvasRenderingContext2D | null;
 
-  async function redrawCanvas() {
-    const ctx = background.getContext('2d');
-
-    if (!ctx) return;
-    if (!getDataURL) return;
-    // Get the data URL of the image
-    const dataURL = getDataURL();
-
-    // Create a new image object
-    const img = new Image();
-    img.src = dataURL;
-
-    // Draw the image onto the canvas
-    ctx.drawImage(img, 0, 0, background.width, background.height);
-
-    // Get the average color of the image
-    const color = fac.getColor(background, { ignoredColor: [0, 0, 0, 0]});
-
-    // Clear the canvas
-    ctx.clearRect(0, 0, background.width, background.height);
-
-    // Fill the canvas with the average color
-    ctx.fillStyle = color.rgb;
-    ctx.fillRect(0, 0, background.width, background.height);
+  let isCalled = false;
+  $: if (getDataURL && ctx && !isCalled) {
+    drawAverageColor();
+    isCalled = true;
   }
 
-  afterUpdate(() => {
-    redrawCanvas();
+  onMount(() => {
+    ctx = background.getContext('2d');
   });
+
+  function drawAverageColor() {
+    if (!ctx) return;
+    if (!getDataURL) return;
+
+    const dataURL: string = getDataURL();
+    if (!dataURL) {
+      console.error('getDataURL returned undefined');
+      return;
+    }
+
+    const img = new Image();
+    img.src = dataURL;
+    img.onload = () => {
+      if (!ctx) return;
+      const color = fac.getColor(img, { ignoredColor: [0, 0, 0, 0] });
+      ctx.clearRect(0, 0, background.width, background.height);
+      ctx.fillStyle = color.rgb;
+      ctx.fillRect(0, 0, background.width, background.height);
+    };
+  }
 </script>
 
 <canvas
