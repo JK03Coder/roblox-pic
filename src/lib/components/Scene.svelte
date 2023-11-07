@@ -133,7 +133,6 @@
         const envMap = pmremGenerator.fromEquirectangular(texture).texture;
         // scene.background = envMap;
         scene.environment = envMap;
-        // scene.rotateY(Math.PI);
         texture.dispose();
         pmremGenerator.dispose();
       });
