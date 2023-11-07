@@ -2,7 +2,7 @@
   import type { Camera, AABB, CameraSettings } from '$lib/types';
   import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
   import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-  import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
+  import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
   import * as THREE from 'three';
   import { cameraSettings, orbitControlsRef } from '$lib/stores';
@@ -59,9 +59,9 @@
 
     cameraSettings.subscribe((newSettings) => {
       sceneCamera.position.set(
-        -newSettings.camera.position.x,
+        newSettings.camera.position.x,
         newSettings.camera.position.y,
-        -newSettings.camera.position.z
+        newSettings.camera.position.z
       );
       sceneCamera.lookAt(
         (newSettings.aabb.min.x + newSettings.aabb.max.x) / 2,
@@ -107,12 +107,14 @@
                 child.material = shinyMaterial;
               }
             });
-            avatar.rotation.y = Math.PI;
             scene.add(avatar);
           },
           undefined,
           (error) => {
-            console.log('An error happened loading the object resource: ', error);
+            console.log(
+              'An error happened loading the object resource: ',
+              error
+            );
           }
         );
       },
@@ -125,12 +127,13 @@
     const pmremGenerator = new THREE.PMREMGenerator(renderer);
     pmremGenerator.compileEquirectangularShader();
 
-    new RGBELoader()
-      .setDataType(THREE.HalfFloatType)
-      .load('/studio.hdr', function (texture) {
+    new EXRLoader()
+      .setDataType(THREE.FloatType)
+      .load('/studio.exr', function (texture) {
         const envMap = pmremGenerator.fromEquirectangular(texture).texture;
         // scene.background = envMap;
         scene.environment = envMap;
+        // scene.rotateY(Math.PI);
         texture.dispose();
         pmremGenerator.dispose();
       });
