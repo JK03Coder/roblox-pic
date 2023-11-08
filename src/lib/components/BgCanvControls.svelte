@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, tick } from 'svelte';
+  import { onMount } from 'svelte';
 
   export let backgroundCanvas: HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D;
@@ -12,65 +12,66 @@
   let innerRadius: number = 50;
   let outerRadius: number = 250;
 
-  let width: number;
-
   onMount(() => {
-    window.addEventListener('resize', updateCanvas);
+    const updateCanvasSize = () => {
+      if (backgroundCanvas) {
+        backgroundCanvas.width = backgroundCanvas.clientWidth;
+        backgroundCanvas.height = backgroundCanvas.clientHeight;
+        updateCanvas();
+      }
+    };
+    updateCanvasSize();
+    window.addEventListener('resize', updateCanvasSize);
     return () => {
-      window.removeEventListener('resize', updateCanvas);
+      window.removeEventListener('resize', updateCanvasSize);
     };
   });
 
   function updateCanvas() {
-    if (!ctx) {
-      console.error('Context is invalid', ctx);
+    if (!backgroundCanvas) {
+      console.error('Canvas is not available');
       return;
     }
-    if (rotation < 0 || rotation > 180) {
-      console.error('rotation is invalid');
-      return;
-    }
-    width = backgroundCanvas.parentElement!.offsetWidth;
-    console.log(width);
+    ctx = backgroundCanvas.getContext('2d')!;
 
-    if (!width) {
-      console.error('width is invalid', width);
-      return;
-    }
-    const radians = (rotation * Math.PI) / 180;
-    const cos = Math.cos(radians);
-    const sin = Math.sin(radians);
-
-    const x0 = width / 2 + (width / 2) * cos;
-    const y0 = width / 2 - (width / 2) * sin;
-    const x1 = width / 2 - (width / 2) * cos;
-    const y1 = width / 2 + (width / 2) * sin;
+    const width = backgroundCanvas.width;
+    const height = backgroundCanvas.height;
 
     if (linearToggle) {
+      // Calculate gradient direction based on rotation
+      const angle = (Math.PI / 180) * rotation;
+      const x0 = width / 2 + (Math.cos(angle) * width) / 2;
+      const y0 = height / 2 - (Math.sin(angle) * height) / 2;
+      const x1 = width / 2 - (Math.cos(angle) * width) / 2;
+      const y1 = height / 2 + (Math.sin(angle) * height) / 2;
       gradient = ctx.createLinearGradient(x0, y0, x1, y1);
     } else {
+      // Create radial gradient
+      const centerX = width / 2;
+      const centerY = height / 2;
       gradient = ctx.createRadialGradient(
-        width / 2,
-        width / 2,
+        centerX,
+        centerY,
         innerRadius,
-        width / 2,
-        width / 2,
+        centerX,
+        centerY,
         outerRadius
       );
     }
-    gradient.addColorStop(0.0, color1);
-    gradient.addColorStop(1.0, color2);
+
+    gradient.addColorStop(0, color1);
+    gradient.addColorStop(1, color2);
 
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, width);
+    ctx.fillRect(0, 0, width, height);
   }
 
   $: if (backgroundCanvas) {
-    initComponent();
-  }
-  async function initComponent() {
-    await tick();
     ctx = backgroundCanvas.getContext('2d')!;
+    updateCanvas();
+  }
+
+  $: if (ctx) {
     updateCanvas();
   }
 
@@ -83,9 +84,7 @@
     updateCanvas();
 
   function swapColors() {
-    const temp = color1;
-    color1 = color2;
-    color2 = temp;
+    [color1, color2] = [color2, color1];
   }
 </script>
 
