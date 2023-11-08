@@ -4,5 +4,6 @@ import Title from './Title.svelte';
 import Scene from './Scene.svelte';
 import Steps from './Steps.svelte';
 import CameraControls from './CameraControls.svelte';
+import BgCanvControls from './BgCanvControls.svelte';
 
-export { DarkModeToggle, RobloxLogo, Title, Scene, Steps, CameraControls };
+export { DarkModeToggle, RobloxLogo, Title, Scene, Steps, CameraControls, BgCanvControls };

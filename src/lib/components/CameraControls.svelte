@@ -75,37 +75,36 @@
 </script>
 
 <ul class="space-y-2">
-          <li>
-            <LucideMousePointerSquare class="inline-block mr-2" />Hold left
-            click to rotate
-          </li>
-          <li>
-            <LucideMousePointerSquareDashed class="inline-block mr-2" />Hold
-            right click to pan
-          </li>
-          <li>
-            <LucideMouse class="inline-block mr-2" />Scroll to zoom in and out
-          </li>
-        </ul>
-        <div class="divider">Presets</div>
-        <div class="grid grid-cols-3 gap-2">
-          <button
-            class="btn bg-base-100"
-            on:click={() => {
-              handleCameraPreset();
-            }}>Default</button
-          >
-          <button
-            class="btn bg-base-100"
-            on:click={() => {
-              handleCameraPreset('bust');
-            }}>Bust</button
-          >
-          <button
-            class="btn bg-base-100"
-            on:click={() => {
-              handleCameraPreset('mug');
-            }}>Mug</button
-          >
-        </div>
-
+  <li>
+    <LucideMousePointerSquare class="inline-block mr-2" />Hold left click to
+    rotate
+  </li>
+  <li>
+    <LucideMousePointerSquareDashed class="inline-block mr-2" />Hold right click
+    to pan
+  </li>
+  <li>
+    <LucideMouse class="inline-block mr-2" />Scroll to zoom in and out
+  </li>
+</ul>
+<div class="divider">Presets</div>
+<div class="grid grid-cols-3 gap-2">
+  <button
+    class="btn bg-base-100"
+    on:click={() => {
+      handleCameraPreset();
+    }}>Default</button
+  >
+  <button
+    class="btn bg-base-100"
+    on:click={() => {
+      handleCameraPreset('bust');
+    }}>Bust</button
+  >
+  <button
+    class="btn bg-base-100"
+    on:click={() => {
+      handleCameraPreset('mug');
+    }}>Mug</button
+  >
+</div>

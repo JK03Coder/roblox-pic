@@ -158,6 +158,6 @@
   }
 </script>
 
-<canvas bind:this={canvReference} class="block w-full h-full">
+<canvas bind:this={canvReference} class="relative w-full h-full z-20">
   Your browser does not support HTML5 Canvas
 </canvas>
