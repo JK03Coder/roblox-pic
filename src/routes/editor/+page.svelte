@@ -1,10 +1,11 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import { Scene, Steps, CameraControls } from '$lib/components';
-  import { Title, BgCanvControls } from '$lib/components';
+  import { Title, BgCanv } from '$lib/components';
   import { orbitControlsRef } from '$lib/stores';
 
   export let data: PageData;
+  const tabTitle = ['Camera Controls', 'Background Gradient', 'Final step'];
 
   let step = 0;
 
@@ -16,9 +17,16 @@
 
   let { camera, aabb, mtl, obj } = data;
 
-  let backgroundCanvas: HTMLCanvasElement;
+  let rotation: number = 90;
+  let color1: string = '#00cafd';
+  let color2: string = '#5149fc';
+  let linearToggle: boolean = false;
+  let innerRadius: number = 50;
+  let outerRadius: number = 50;
 
-  const tabTitle = ['Camera Controls', 'Background Gradient', 'Final step'];
+  function swapColors() {
+    [color1, color2] = [color2, color1];
+  }
 </script>
 
 <Title name="Editor" />
@@ -31,12 +39,15 @@
   >
     {#if camera && aabb && mtl && obj}
       <Scene {camera} {aabb} {mtl} {obj} />
-      <canvas
-        bind:this={backgroundCanvas}
-        class="absolute top-0 w-full h-full z-10"
-      >
-        Your browser does not support HTML5 Canvas
-      </canvas>
+      <BgCanv
+        {step}
+        {rotation}
+        {color1}
+        {color2}
+        {linearToggle}
+        {innerRadius}
+        {outerRadius}
+      />
     {:else}
       <h1>Something went wrong</h1>
     {/if}
@@ -46,11 +57,66 @@
       <Steps bind:step />
       <h1 class="card-title">{tabTitle[step]}</h1>
       <div class="flex-1">
+        <!-- Camera Controls -->
         {#if camera && aabb && step === 0}
           <CameraControls {camera} {aabb} />
         {/if}
+        <!-- Gradient Controls -->
         <div class:hidden={step !== 1}>
-          <BgCanvControls {backgroundCanvas} {step}/>
+          <label>
+            Linear or Radial:
+            <input type="checkbox" class="toggle" bind:checked={linearToggle} />
+          </label>
+
+          {#if linearToggle}
+            <label>
+              Rotation: {rotation}
+              <input
+                class="range"
+                type="range"
+                min="0"
+                max="180"
+                bind:value={rotation}
+              />
+            </label>
+          {:else}
+            <label>
+              Inner Radius: {innerRadius}
+              <input
+                class="range"
+                type="range"
+                min="0"
+                max="100"
+                bind:value={innerRadius}
+              />
+            </label>
+            <label>
+              Outer Radius: {outerRadius}
+              <input
+                class="range"
+                type="range"
+                min="0"
+                max="100"
+                bind:value={outerRadius}
+              />
+            </label>
+          {/if}
+
+          <label>
+            Color 1:
+            <input type="color" name="Color1" bind:value={color1} />
+          </label>
+
+          <label>
+            Color 2:
+            <input type="color" name="Color2" bind:value={color2} />
+          </label>
+
+          <label>
+            Swap Colors:
+            <button type="button" on:click={swapColors} class="btn">Swap</button
+            >
+          </label>
         </div>
       </div>
       <div class="card-actions justify-between">

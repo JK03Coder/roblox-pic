@@ -93,6 +93,18 @@
   function swapColors() {
     [color1, color2] = [color2, color1];
   }
+
+  function mapValueToRange(
+    value: number,
+    rangeMin: number,
+    rangeMax: number
+  ): number {
+    if (value < 0 || value > 100) {
+      throw new Error('Value must be between 0 and 100');
+    }
+
+    return ((rangeMax - rangeMin) / (100 - 0)) * (value - 0) + rangeMin;
+  }
 </script>
 
 <label>
