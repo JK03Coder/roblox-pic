@@ -26,14 +26,17 @@
 <div
   class="flex flex-col lg:flex-row items-center lg:justify-center h-full gap-2 lg:gap-8 p-8"
 >
-  <div class="relative bg-base-200 w-[45vh] h-[45vh] lg:w-[45vw] lg:h-[45vw] shadow-xl">
+  <div
+    class="relative bg-base-200 w-[45vh] h-[45vh] lg:w-[45vw] lg:h-[45vw] shadow-xl"
+  >
     {#if camera && aabb && mtl && obj}
       <Scene {camera} {aabb} {mtl} {obj} />
-      {#if step > 0}
-        <canvas bind:this={backgroundCanvas} class="absolute flex top-0 w-full h-full z-10">
-          Your browser does not support HTML5 Canvas
-        </canvas>
-      {/if}
+      <canvas
+        bind:this={backgroundCanvas}
+        class="absolute top-0 w-full h-full z-10"
+      >
+        Your browser does not support HTML5 Canvas
+      </canvas>
     {:else}
       <h1>Something went wrong</h1>
     {/if}
@@ -46,9 +49,9 @@
         {#if camera && aabb && step === 0}
           <CameraControls {camera} {aabb} />
         {/if}
-        {#if step === 1}
-          <BgCanvControls {backgroundCanvas} />
-        {/if}
+        <div class:hidden={step !== 1}>
+          <BgCanvControls {backgroundCanvas} {step}/>
+        </div>
       </div>
       <div class="card-actions justify-between">
         <button

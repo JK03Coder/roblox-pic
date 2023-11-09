@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
 
   export let backgroundCanvas: HTMLCanvasElement;
+  export let step = 1;
   let ctx: CanvasRenderingContext2D;
   let gradient: CanvasGradient;
 
@@ -12,30 +13,42 @@
   let innerRadius: number = 50;
   let outerRadius: number = 250;
 
+  function updateCanvasSize() {
+    backgroundCanvas.width = backgroundCanvas.offsetWidth;
+    backgroundCanvas.height = backgroundCanvas.offsetHeight;
+  }
   onMount(() => {
-    const updateCanvasSize = () => {
-      if (backgroundCanvas) {
-        backgroundCanvas.width = backgroundCanvas.clientWidth;
-        backgroundCanvas.height = backgroundCanvas.clientHeight;
-        updateCanvas();
-      }
-    };
-    updateCanvasSize();
     window.addEventListener('resize', updateCanvasSize);
     return () => {
       window.removeEventListener('resize', updateCanvasSize);
     };
   });
 
-  function updateCanvas() {
-    if (!backgroundCanvas) {
-      console.error('Canvas is not available');
+  // Run code here once the canvas is valid
+  let hasInit = false;
+  $: backgroundCanvas, initCanv();
+  async function initCanv() {
+    if (hasInit) return;
+    if (!backgroundCanvas) return;
+    await tick();
+    const temp = backgroundCanvas.getContext('2d');
+    if (!temp) {
+      console.error('oopsies');
       return;
     }
-    ctx = backgroundCanvas.getContext('2d')!;
+    ctx = temp;
+    updateCanvas();
+    updateCanvasSize();
+    hasInit = true;
+  }
 
-    const width = backgroundCanvas.width;
-    const height = backgroundCanvas.height;
+  function updateCanvas() {
+    if (!backgroundCanvas) return;
+    if (!ctx) return;
+
+    const width = backgroundCanvas.offsetWidth;
+    const height = backgroundCanvas.offsetHeight;
+    console.log(width, height);
 
     if (linearToggle) {
       // Calculate gradient direction based on rotation
@@ -49,6 +62,8 @@
       // Create radial gradient
       const centerX = width / 2;
       const centerY = height / 2;
+      console.log(centerX, centerY);
+
       gradient = ctx.createRadialGradient(
         centerX,
         centerY,
@@ -66,16 +81,8 @@
     ctx.fillRect(0, 0, width, height);
   }
 
-  $: if (backgroundCanvas) {
-    ctx = backgroundCanvas.getContext('2d')!;
-    updateCanvas();
-  }
-
-  $: if (ctx) {
-    updateCanvas();
-  }
-
-  $: rotation,
+  $: step,
+    rotation,
     color1,
     color2,
     linearToggle,
@@ -105,7 +112,7 @@
       class="range"
       type="range"
       min="0"
-      max="100"
+      max={backgroundCanvas.width * 0.45}
       bind:value={innerRadius}
     />
   </label>
@@ -114,8 +121,8 @@
     <input
       class="range"
       type="range"
-      min="100"
-      max="400"
+      min={backgroundCanvas.width * 0.25}
+      max={backgroundCanvas.width}
       bind:value={outerRadius}
     />
   </label>
