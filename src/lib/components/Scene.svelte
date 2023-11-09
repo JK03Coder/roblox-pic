@@ -27,6 +27,7 @@
       antialias: true,
       canvas: canvReference,
       alpha: true,
+      preserveDrawingBuffer: true,
     });
     renderer.setSize(canvReference.offsetWidth, canvReference.offsetHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -148,6 +149,10 @@
       renderer.setSize(parent.offsetWidth, parent.offsetHeight);
     });
   });
+
+  export function getDataUri() {
+    return canvReference.toDataURL('image/png', 1.0);
+  }
 
   function getHashUrl(hash: string) {
     let st = 31;

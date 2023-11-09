@@ -13,6 +13,10 @@
   export let innerRadius: number = 50;
   export let outerRadius: number = 50;
 
+  export function getDataUri() {
+    return backgroundCanvas.toDataURL('image/png', 1.0);
+  }
+
   onMount(() => {
     ctx = backgroundCanvas.getContext('2d')!;
     updateCanvas();
