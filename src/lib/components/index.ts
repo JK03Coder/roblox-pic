@@ -4,7 +4,6 @@ import Title from './Title.svelte';
 import Scene from './Scene.svelte';
 import Steps from './Steps.svelte';
 import CameraControls from './CameraControls.svelte';
-import BgCanvControls from './BgCanvControls.svelte';
 import BgCanv from './BgCanv.svelte';
 
 export {
@@ -14,6 +13,5 @@ export {
   Scene,
   Steps,
   CameraControls,
-  BgCanvControls,
   BgCanv,
 };
