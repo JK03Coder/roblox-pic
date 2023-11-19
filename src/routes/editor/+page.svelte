@@ -3,7 +3,7 @@
   import { Scene, Steps, CameraControls } from '$lib/components';
   import { Title, BgCanv } from '$lib/components';
   import { orbitControlsRef } from '$lib/stores';
-  import { combineImages } from '$lib/utils';
+  import { combineCanvases } from '$lib/utils';
 
   export let data: PageData;
   const tabTitle = ['Camera Controls', 'Background Gradient', 'Final step'];
@@ -18,8 +18,8 @@
 
   let { camera, aabb, mtl, obj } = data;
 
-  let backgroundCanvas: any;
-  let sceneCanvas: any;
+  let backgroundCanvas: HTMLCanvasElement;
+  let sceneCanvas: HTMLCanvasElement;
 
   let rotation: number = 90;
   let color1: string = '#00cafd';
@@ -33,9 +33,9 @@
   }
 
   async function downloadImage(_event: Event) {
-    let downloadDataUri: string | void = await combineImages(
-      backgroundCanvas.getDataUri(),
-      sceneCanvas.getDataUri()
+    let downloadDataUri: string | void = await combineCanvases(
+      backgroundCanvas,
+      sceneCanvas
     )
       .then((combinedDataURI) => {
         return combinedDataURI;
@@ -56,19 +56,6 @@
     anchor.click();
     document.body.removeChild(anchor);
   }
-
-  async function getDataUris() {
-    console.log(backgroundCanvas.getDataUri().slice(0, 50));
-    console.log(sceneCanvas.getDataUri().slice(0, 50));
-
-    combineImages(backgroundCanvas.getDataUri(), sceneCanvas.getDataUri())
-      .then((combinedDataURI) => {
-        console.log('Combined image data URI:', combinedDataURI.slice(0, 50));
-      })
-      .catch((error) => {
-        console.error('An error occurred:', error);
-      });
-  }
 </script>
 
 <Title name="Editor" />
@@ -80,9 +67,9 @@
     class="relative bg-base-200 w-[45vh] h-[45vh] lg:w-[45vw] lg:h-[45vw] shadow-xl"
   >
     {#if camera && aabb && mtl && obj}
-      <Scene bind:this={sceneCanvas} {camera} {aabb} {mtl} {obj} />
+      <Scene bind:canvReference={sceneCanvas} {camera} {aabb} {mtl} {obj} />
       <BgCanv
-        bind:this={backgroundCanvas}
+        bind:backgroundCanvas={backgroundCanvas}
         {step}
         {rotation}
         {color1}
@@ -162,20 +149,9 @@
           </label>
         </div>
         {#if step === 2}
-          <a
-            href={backgroundCanvas.getDataUri()}
-            download="background.png"
-            class="btn btn-primary">Background Image</a
-          >
-          <a
-            href={sceneCanvas.getDataUri()}
-            download="scene.png"
-            class="btn btn-secondary">Scene Image</a
-          >
           <button type="button" class="btn btn-accent" on:click={downloadImage}
             >Final Image</button
           >
-          <button class="btn btn-neutral" on:click={getDataUris}>Log</button>
         {/if}
       </div>
       <div class="card-actions justify-between">

@@ -15,7 +15,7 @@
   export let mtl: string;
   export let obj: string;
 
-  let canvReference: HTMLCanvasElement;
+  export let canvReference: HTMLCanvasElement;
   let parent: HTMLElement;
 
   onMount(() => {
@@ -149,10 +149,6 @@
       renderer.setSize(parent.offsetWidth, parent.offsetHeight);
     });
   });
-
-  export function getDataUri() {
-    return canvReference.toDataURL('image/png', 1.0);
-  }
 
   function getHashUrl(hash: string) {
     let st = 31;

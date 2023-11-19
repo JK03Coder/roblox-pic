@@ -14,7 +14,10 @@ export function executeViewTransition(callback: Function) {
   });
 }
 
-export function combineImages(dataURI1: string, dataURI2: string): Promise<string> {
+export function combineImages(
+  dataURI1: string,
+  dataURI2: string
+): Promise<string> {
   return new Promise((resolve, reject) => {
     // Create a new, invisible canvas element
     const canvas = document.createElement('canvas');
@@ -60,5 +63,45 @@ export function combineImages(dataURI1: string, dataURI2: string): Promise<strin
 
     // Set the source of the first image
     image1.src = dataURI1;
+  });
+}
+
+export function combineCanvases(
+  canvas1: HTMLCanvasElement,
+  canvas2: HTMLCanvasElement
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    try {
+      // Create a new canvas with the desired size
+      const combinedCanvas = document.createElement('canvas');
+      combinedCanvas.width = canvas1.width; // Set your desired width
+      combinedCanvas.height = canvas1.height; // Set your desired height
+      const context = combinedCanvas.getContext('2d')!;
+
+      // Draw the first canvas onto the new canvas
+      context.drawImage(
+        canvas1,
+        0,
+        0,
+        combinedCanvas.width,
+        combinedCanvas.height
+      );
+
+      // Draw the second canvas on top of the first
+      context.drawImage(
+        canvas2,
+        0,
+        0,
+        combinedCanvas.width,
+        combinedCanvas.height
+      );
+
+      // Get the combined image data URI from the canvas
+      const combinedDataURI = combinedCanvas.toDataURL('image/png', 1.0);
+
+      resolve(combinedDataURI);
+    } catch (error) {
+      reject(error);
+    }
   });
 }
