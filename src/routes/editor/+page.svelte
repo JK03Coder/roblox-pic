@@ -5,10 +5,12 @@
   import { orbitControlsRef } from '$lib/stores';
   import { combineCanvases } from '$lib/utils';
 
+  type GradientType = 'linear' | 'radial';
+
   export let data: PageData;
   const tabTitle = ['Camera Controls', 'Background Gradient', 'Final step'];
 
-  let step = 0;
+  let step = 1;
 
   $: if (step === 0) {
     if ($orbitControlsRef) $orbitControlsRef.enabled = true;
@@ -27,7 +29,7 @@
   let rotation: number = 90;
   let color1: string = '#00cafd';
   let color2: string = '#5149fc';
-  let linearToggle: boolean = false;
+  let gradientType: GradientType = 'linear';
   let innerRadius: number = 50;
   let outerRadius: number = 50;
 
@@ -95,7 +97,7 @@
         {rotation}
         {color1}
         {color2}
-        {linearToggle}
+        {gradientType}
         {innerRadius}
         {outerRadius}
       />
@@ -114,12 +116,51 @@
         {/if}
         <!-- Gradient Controls -->
         <div class:hidden={step !== 1}>
-          <label>
-            Linear or Radial:
-            <input type="checkbox" class="toggle" bind:checked={linearToggle} />
+          <ul class="space-y-2">
+            <li>Choose your background style</li>
+          </ul>
+
+          <div class="divider">Gradient Type</div>
+
+          <!-- Gradient Type Radio Buttons -->
+          <div class="join block text-center mb-4">
+            {#each ['Linear', 'Radial'] as type}
+              <input
+                class="join-item btn btn-accent btn-sm btn-outline"
+                type="radio"
+                name="gradient-type"
+                aria-label={type}
+                value={type.toLowerCase()}
+                bind:group={gradientType}
+              />
+            {/each}
+          </div>
+
+          <label class="label mb-2 rounded-lg p-2 shadow shadow-base-content/30">
+            Color 1:
+            <input
+              type="color"
+              name="Color1"
+              class="w-6 h-6 cursor-pointer border-2 border-base-content"
+              bind:value={color1}
+            />
           </label>
 
-          {#if linearToggle}
+          <label class="label mb-4 rounded-lg p-2 shadow shadow-base-content/30">
+            Color 2:
+            <input
+              type="color"
+              name="Color2"
+              class="w-6 h-6 cursor-pointer border-2 border-base-content"
+              bind:value={color2}
+            />
+          </label>
+
+          <button type="button" on:click={swapColors} class="btn btn-neutral btn-sm block mb-2"
+            >Swap Colors</button
+          >
+
+          {#if gradientType === 'linear'}
             <label>
               Rotation: {rotation}
               <input
@@ -130,7 +171,9 @@
                 bind:value={rotation}
               />
             </label>
-          {:else}
+          {/if}
+
+          {#if gradientType === 'radial'}
             <label>
               Inner Radius: {innerRadius}
               <input
@@ -152,22 +195,6 @@
               />
             </label>
           {/if}
-
-          <label>
-            Color 1:
-            <input type="color" name="Color1" bind:value={color1} />
-          </label>
-
-          <label>
-            Color 2:
-            <input type="color" name="Color2" bind:value={color2} />
-          </label>
-
-          <label>
-            Swap Colors:
-            <button type="button" on:click={swapColors} class="btn">Swap</button
-            >
-          </label>
         </div>
         {#if step === 2}
           <button type="button" class="btn btn-accent" on:click={downloadImage}

@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  type GradientType = 'linear' | 'radial';
+
   export let backgroundCanvas: HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D;
   let gradient: CanvasGradient;
@@ -9,7 +11,7 @@
   export let rotation: number = 90;
   export let color1: string = '#00cafd';
   export let color2: string = '#5149fc';
-  export let linearToggle: boolean = false;
+  export let gradientType: GradientType = 'linear';
   export let innerRadius: number = 50;
   export let outerRadius: number = 50;
 
@@ -48,27 +50,32 @@
       height = value;
     }
 
-    if (linearToggle) {
-      // Calculate gradient direction based on rotation
-      const angle = (Math.PI / 180) * rotation;
-      const x0 = width / 2 + (Math.cos(angle) * width) / 2;
-      const y0 = height / 2 - (Math.sin(angle) * height) / 2;
-      const x1 = width / 2 - (Math.cos(angle) * width) / 2;
-      const y1 = height / 2 + (Math.sin(angle) * height) / 2;
-      gradient = ctx.createLinearGradient(x0, y0, x1, y1);
-    } else {
-      // Create radial gradient
-      const centerX = width / 2;
-      const centerY = height / 2;
+    switch (gradientType) {
+      case 'linear':
+        const angle = (Math.PI / 180) * rotation;
+        const x0 = width / 2 + (Math.cos(angle) * width) / 2;
+        const y0 = height / 2 - (Math.sin(angle) * height) / 2;
+        const x1 = width / 2 - (Math.cos(angle) * width) / 2;
+        const y1 = height / 2 + (Math.sin(angle) * height) / 2;
+        gradient = ctx.createLinearGradient(x0, y0, x1, y1);
+        break;
 
-      gradient = ctx.createRadialGradient(
-        centerX,
-        centerY,
-        mapValueToRange(innerRadius, 0, width / 4),
-        centerX,
-        centerY,
-        mapValueToRange(outerRadius, width / 4, width)
-      );
+      case 'radial':
+        const centerX = width / 2;
+        const centerY = height / 2;
+
+        gradient = ctx.createRadialGradient(
+          centerX,
+          centerY,
+          mapValueToRange(innerRadius, 0, width / 4),
+          centerX,
+          centerY,
+          mapValueToRange(outerRadius, width / 4, width)
+        );
+        break;
+
+      default:
+        break;
     }
 
     gradient.addColorStop(0, color1);
@@ -82,7 +89,7 @@
     rotation,
     color1,
     color2,
-    linearToggle,
+    gradientType,
     innerRadius,
     outerRadius,
     updateCanvas();
