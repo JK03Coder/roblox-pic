@@ -17,21 +17,36 @@
     ctx = backgroundCanvas.getContext('2d')!;
     updateCanvas();
 
-    window.addEventListener('resize', updateCanvas);
+    window.addEventListener('resize', () => {
+      updateCanvas();
+    });
     return () => {
-      window.removeEventListener('resize', updateCanvas);
+      window.removeEventListener('resize', () => {
+        updateCanvas();
+      });
     };
   });
 
-  function updateCanvas() {
+  function updateCanvas(value: number | undefined = undefined) {
     if (!backgroundCanvas) return;
     if (!ctx) return;
 
-    backgroundCanvas.width = backgroundCanvas.offsetWidth;
-    backgroundCanvas.height = backgroundCanvas.offsetHeight;
+    let width: number;
+    let height: number;
 
-    const width = backgroundCanvas.width;
-    const height = backgroundCanvas.height;
+    if (!value) {
+      backgroundCanvas.width = backgroundCanvas.offsetWidth;
+      backgroundCanvas.height = backgroundCanvas.offsetHeight;
+
+      width = backgroundCanvas.width;
+      height = backgroundCanvas.height;
+    } else {
+      backgroundCanvas.width = value;
+      backgroundCanvas.height = value;
+
+      width = value;
+      height = value;
+    }
 
     if (linearToggle) {
       // Calculate gradient direction based on rotation

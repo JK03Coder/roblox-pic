@@ -68,36 +68,46 @@ export function combineImages(
 
 export function combineCanvases(
   canvas1: HTMLCanvasElement,
-  canvas2: HTMLCanvasElement
+  canvas2: HTMLCanvasElement,
+  renderer: THREE.WebGLRenderer,
+  desiredWidth: number = 800,
+  desiredHeight: number = 800
 ): Promise<string> {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
-      // Create a new canvas with the desired size
+      // Store original sizes
+      const originalWidth1 = canvas1.width;
+      const originalHeight1 = canvas1.height;
+
+      // Resize the Three.js renderer
+      renderer.setSize(desiredWidth, desiredHeight);
+
+      const awaitAnimationFrame = () =>
+        new Promise<void>((resolve) => {
+          requestAnimationFrame(() => resolve());
+        });
+      
+      await awaitAnimationFrame();
+
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Create a new canvas for the combined image
       const combinedCanvas = document.createElement('canvas');
-      combinedCanvas.width = canvas1.width; // Set your desired width
-      combinedCanvas.height = canvas1.height; // Set your desired height
+      combinedCanvas.width = desiredWidth;
+      combinedCanvas.height = desiredHeight;
       const context = combinedCanvas.getContext('2d')!;
 
-      // Draw the first canvas onto the new canvas
-      context.drawImage(
-        canvas1,
-        0,
-        0,
-        combinedCanvas.width,
-        combinedCanvas.height
-      );
+      // Draw the first canvas onto the combined canvas
+      context.drawImage(canvas1, 0, 0, desiredWidth, desiredHeight);
 
       // Draw the second canvas on top of the first
-      context.drawImage(
-        canvas2,
-        0,
-        0,
-        combinedCanvas.width,
-        combinedCanvas.height
-      );
+      context.drawImage(canvas2, 0, 0, desiredWidth, desiredHeight);
 
       // Get the combined image data URI from the canvas
       const combinedDataURI = combinedCanvas.toDataURL('image/png', 1.0);
+
+      // Reset the sizes of the canvases and renderer
+      renderer.setSize(originalWidth1, originalHeight1);
 
       resolve(combinedDataURI);
     } catch (error) {

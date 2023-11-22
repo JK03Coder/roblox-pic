@@ -16,6 +16,7 @@
   export let obj: string;
 
   export let canvReference: HTMLCanvasElement;
+  export let renderer: THREE.WebGLRenderer;
   let parent: HTMLElement;
 
   onMount(() => {
@@ -23,7 +24,7 @@
 
     const scene = new THREE.Scene();
 
-    const renderer = new THREE.WebGLRenderer({
+    renderer = new THREE.WebGLRenderer({
       antialias: true,
       canvas: canvReference,
       alpha: true,

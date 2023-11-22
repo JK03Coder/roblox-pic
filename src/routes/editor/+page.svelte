@@ -20,6 +20,9 @@
 
   let backgroundCanvas: HTMLCanvasElement;
   let sceneCanvas: HTMLCanvasElement;
+  let renderer: THREE.WebGLRenderer;
+
+  let showLoading = false;
 
   let rotation: number = 90;
   let color1: string = '#00cafd';
@@ -33,9 +36,13 @@
   }
 
   async function downloadImage(_event: Event) {
+    showLoading = true;
     let downloadDataUri: string | void = await combineCanvases(
       backgroundCanvas,
-      sceneCanvas
+      sceneCanvas,
+      renderer,
+      800,
+      800
     )
       .then((combinedDataURI) => {
         return combinedDataURI;
@@ -55,6 +62,7 @@
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
+    showLoading = false;
   }
 </script>
 
@@ -66,10 +74,23 @@
   <div
     class="relative bg-base-200 w-[45vh] h-[45vh] lg:w-[45vw] lg:h-[45vw] shadow-xl"
   >
+    <div
+      class:hidden={!showLoading}
+      class="bg-base-200 absolute flex items-center justify-center top-0 w-full h-full z-50"
+    >
+      <div class="loading loading-spinner w-[5vh] lg:w-[5vw]" />
+    </div>
     {#if camera && aabb && mtl && obj}
-      <Scene bind:canvReference={sceneCanvas} {camera} {aabb} {mtl} {obj} />
+      <Scene
+        bind:canvReference={sceneCanvas}
+        bind:renderer
+        {camera}
+        {aabb}
+        {mtl}
+        {obj}
+      />
       <BgCanv
-        bind:backgroundCanvas={backgroundCanvas}
+        bind:backgroundCanvas
         {step}
         {rotation}
         {color1}
