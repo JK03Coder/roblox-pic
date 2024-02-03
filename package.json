@@ -25,17 +25,12 @@
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.17.1",
-    "vite": "^4.5.0",
-    "wrangler-proxy": "^2.2.1"
+    "vite": "^4.5.0"
   },
   "type": "module",
   "dependencies": {
-    "@cloudflare/workers-types": "^4.20231016.0",
     "@fontsource-variable/montserrat": "^5.0.16",
-    "@lucia-auth/adapter-sqlite": "^2.0.1",
-    "@lucia-auth/oauth": "^3.3.1",
     "@types/three": "^0.157.2",
-    "lucia": "^2.7.1",
     "svelte-daisy-toast": "^0.0.2",
     "three": "^0.157.0"
   }

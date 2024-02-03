@@ -17,7 +17,7 @@
         any scenario for profile pictures, banners, or game icons.
       </p>
       <a
-        href={data.isAuth ? "/dashboard" : "/login/roblox"}
+        href="/dashboard"
         class="btn btn-primary"
         draggable="false"
         data-sveltekit-preload-data="hover">Get Started</a
