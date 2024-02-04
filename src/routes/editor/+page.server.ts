@@ -35,7 +35,7 @@ export const load = (async ({ url }) => {
   const rid = url.searchParams.get('id');
 
   if (rid === null || !/^\d+$/.test(rid)) {
-    throw redirect(303, '/dashboard');
+    redirect(303, '/dashboard');
   }
   try {
     const data: AvatarData = await getAvatarData(rid!, 300);

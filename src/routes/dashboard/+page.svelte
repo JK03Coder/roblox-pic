@@ -1,6 +1,5 @@
 <script lang="ts">
-  import LucideSearch from '~icons/lucide/search'
-  import type { ActionData, PageData } from './$types';
+  import type { ActionData } from './$types';
   import { Title } from '$lib/components';
   import { toast } from 'svelte-daisy-toast';
   function boop() {
@@ -11,7 +10,6 @@
       type: 'success',
     });
   }
-  // export let data: PageData;
   export let form: ActionData;
 </script>
 
@@ -25,15 +23,19 @@
       <input
         type="search"
         name="search"
-        class="join-item input input-bordered"
+        class="input input-bordered join-item"
+        placeholder="Search"
         autocomplete="off"
       />
-      <button type="submit" class="join-item btn"><LucideSearch/></button>
+      <button type="submit" class="btn btn-accent join-item normal-case">
+        Search
+      </button>
     </div>
   </form>
   {#if form}
     {JSON.stringify(form.users)}
   {/if}
+  <div class="skeleton w-32 h-32"></div>
   <a href="/editor?id=189226906" class="btn btn-primary"> Editor </a>
   <button class="btn" on:click={boop}>send toast</button>
 </main>
