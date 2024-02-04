@@ -61,7 +61,7 @@
               class="card-body text-sm lg:text-lg p-5 lg:p-8 leading-3 lg:leading-4"
             >
               <p class="font-semibold">{user.displayName}</p>
-              <p class="font-medium">{user.name}</p>
+              <p class="font-medium">@{user.name}</p>
               <p>{user.id}</p>
             </div>
           </a>
