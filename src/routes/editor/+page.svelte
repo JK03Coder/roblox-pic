@@ -10,7 +10,7 @@
   export let data: PageData;
   const tabTitle = ['Camera Controls', 'Background Gradient', 'Final step'];
 
-  let step = 1;
+  let step = 0;
 
   $: if (step === 0) {
     if ($orbitControlsRef) $orbitControlsRef.enabled = true;
@@ -102,7 +102,7 @@
         {outerRadius}
       />
     {:else}
-      <h1>Something went wrong</h1>
+      <h1 class="text-center mt-4">Something went wrong. Try refreshing the page</h1>
     {/if}
   </div>
   <div class="card bg-base-200 w-[45vh] lg:h-[45vw] shadow-xl">
@@ -136,28 +136,34 @@
             {/each}
           </div>
 
-          <label class="label mb-2 rounded-lg p-2 shadow shadow-base-content/30">
+          <label
+            class="label mb-2 cursor-pointer rounded-lg p-2 shadow shadow-base-content/30"
+          >
             Color 1:
             <input
               type="color"
               name="Color1"
-              class="w-6 h-6 cursor-pointer border-2 border-base-content"
+              class="w-6 h-6 border-2 border-base-content"
               bind:value={color1}
             />
           </label>
 
-          <label class="label mb-4 rounded-lg p-2 shadow shadow-base-content/30">
+          <label
+            class="label mb-4 cursor-pointer rounded-lg p-2 shadow shadow-base-content/30"
+          >
             Color 2:
             <input
               type="color"
               name="Color2"
-              class="w-6 h-6 cursor-pointer border-2 border-base-content"
+              class="w-6 h-6 border-2 border-base-content"
               bind:value={color2}
             />
           </label>
 
-          <button type="button" on:click={swapColors} class="btn btn-neutral btn-sm block mb-2"
-            >Swap Colors</button
+          <button
+            type="button"
+            on:click={swapColors}
+            class="btn btn-neutral btn-sm block mb-2">Swap Colors</button
           >
 
           {#if gradientType === 'linear'}

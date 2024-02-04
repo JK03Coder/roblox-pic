@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { AvatarData, ImageData } from '$lib/types';
 
@@ -35,7 +35,9 @@ export const load = (async ({ url }) => {
   const rid = url.searchParams.get('id');
 
   if (rid === null || !/^\d+$/.test(rid)) {
-    redirect(303, '/dashboard');
+    error(400, {
+      message: 'Invalid Roblox ID',
+    });
   }
   try {
     const data: AvatarData = await getAvatarData(rid!, 300);
@@ -51,9 +53,11 @@ export const load = (async ({ url }) => {
     }
 
     return { camera, aabb, mtl, obj };
-  } catch (error) {
-    console.error('Error: ', error);
-    redirect(303, '/dashboard');
+  } catch (err) {
+    console.error('Error: ', err);
+    error(424, {
+      message: 'Something went wrong',
+    });
   }
 }) satisfies PageServerLoad;
 
