@@ -31,13 +31,12 @@ imageUrl response
 }
 */
 
-export const load = (async (event) => {
-  const layoutData = await event.parent();
-  if (!layoutData.isAuth) {
-    redirect(303, '/');
-  }
-  const rid = layoutData.robloxId;
+export const load = (async ({ url }) => {
+  const rid = url.searchParams.get('id');
 
+  if (rid === null || !/^\d+$/.test(rid)) {
+    throw redirect(303, '/dashboard');
+  }
   try {
     const data: AvatarData = await getAvatarData(rid!, 300);
 
