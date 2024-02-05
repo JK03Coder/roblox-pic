@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LucideShare2 from '~icons/lucide/share-2';
+  import LucideShare from '~icons/lucide/share';
   import { toast } from 'svelte-daisy-toast';
 
   export let getDataUriFunction: () => Promise<string | void>;
@@ -79,5 +79,5 @@
 </script>
 
 <button on:click={shareOrCopy} class="btn btn-primary">
-  Share Image<LucideShare2 />
+  Share Image<LucideShare />
 </button>

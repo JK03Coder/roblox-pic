@@ -7,6 +7,7 @@ import CameraControls from './CameraControls.svelte';
 import BgCanv from './BgCanv.svelte';
 import ShareButton from './ShareButton.svelte';
 import ShareImageButton from './ShareImageButton.svelte';
+import KofiButton from './KofiButton.svelte';
 
 export {
   DarkModeToggle,
@@ -18,4 +19,5 @@ export {
   BgCanv,
   ShareButton,
   ShareImageButton,
+  KofiButton,
 };

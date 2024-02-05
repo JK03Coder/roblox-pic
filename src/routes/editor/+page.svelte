@@ -1,6 +1,13 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { Scene, Steps, CameraControls, ShareButton, ShareImageButton } from '$lib/components';
+  import {
+    Scene,
+    Steps,
+    CameraControls,
+    ShareButton,
+    ShareImageButton,
+    KofiButton,
+  } from '$lib/components';
   import { Title, BgCanv } from '$lib/components';
   import { orbitControlsRef } from '$lib/stores';
   import { combineCanvases } from '$lib/utils';
@@ -210,11 +217,15 @@
           {/if}
         </div>
         {#if step === 2}
-          <button type="button" class="btn btn-accent" on:click={downloadImage}
-            >Download Image</button
+          <button
+            type="button"
+            class="btn btn-accent mb-10"
+            on:click={downloadImage}>Download Image</button
           >
+          <br />
           <ShareButton />
           <ShareImageButton getDataUriFunction={getDataUri} />
+          <KofiButton />
         {/if}
       </div>
       <div class="card-actions justify-between">
