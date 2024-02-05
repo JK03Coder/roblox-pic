@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>Roblox Pic</title>
+  <title>RoboGrafx</title>
 </svelte:head>
 
 <div class="hero min-h-full">

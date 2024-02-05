@@ -38,9 +38,9 @@
 
   async function shareOrCopy() {
     const shareData = {
-      title: 'Roblox Picture',
-      text: 'Make your Roblox profile picture!',
-      url: 'https://yourwebsite.com/',
+      title: 'RobloGrafx',
+      text: 'Create a stunning Roblox avatar picture!',
+      url: 'https://robografx.com/',
     };
     const textToCopy = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
 

@@ -12,8 +12,15 @@
 <div class="h-screen flex flex-col">
   <nav class="navbar bg-base-200 px-4 sticky top-0 z-50 shadow-md">
     <div class="flex-1">
-      <a href="/" class="font-semibold normal-case text-md lg:text-2xl" draggable="false"
-        >RoboGrafx</a
+      <a
+        href="/"
+        class="font-semibold normal-case text-md lg:text-2xl"
+        draggable="false"
+        ><img
+          src="favicon.png"
+          class="h-8 w-8 inline-block mr-1 align-text-bottom"
+          alt="logo"
+        />oboGrafx</a
       >
     </div>
     <div class="flex-none">

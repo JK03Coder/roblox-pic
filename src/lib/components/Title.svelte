@@ -3,5 +3,5 @@
 </script>
 
 <svelte:head>
-  <title>{name} | Roblox Pic</title>
+  <title>{name} | RobGrafx</title>
 </svelte:head>
