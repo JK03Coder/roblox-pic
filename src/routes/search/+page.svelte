@@ -127,6 +127,8 @@
     </button>
   </form>
 
+  <!-- TODO when clicking a user add some user feedback they know -->
+
   {#if users.length > 0}
     <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 m-4 lg:mt-8">
       {#each users as user}
