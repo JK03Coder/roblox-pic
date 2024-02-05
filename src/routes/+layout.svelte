@@ -3,6 +3,7 @@
   import type { LayoutData } from './$types';
   import { DarkModeToggle } from '$lib/components';
   import Toast from 'svelte-daisy-toast';
+  import LucideUserSearch from '~icons/lucide/user-search';
 
   export let data: LayoutData;
 </script>
@@ -23,6 +24,9 @@
         />oboGrafx</a
       >
     </div>
+    <a href="/search">
+      <LucideUserSearch class="text-2xl mr-4" />
+    </a>
     <div class="flex-none">
       <DarkModeToggle />
     </div>
