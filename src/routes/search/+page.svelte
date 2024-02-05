@@ -105,14 +105,14 @@
 <Title name="Search" />
 
 <main class="flex flex-col items-center text-xl mt-10 lg:mt-20">
-  <h2 class="mb-2.5">Please type your avatar's username in</h2>
+  <h2 class="mb-2.5 max-sm:text-sm">Please type your avatar's username in</h2>
 
-  <form on:submit={handleSearch} class="join w-96 mx-auto">
+  <form on:submit={handleSearch} class="join lg:w-96 lg:mx-auto">
     <input
       type="search"
       name="search"
       bind:value={searchInput}
-      class="input input-bordered join-item w-full"
+      class="input input-bordered max-sm:input-sm join-item lg:w-full"
       placeholder="Search"
       autocomplete="off"
       required
@@ -120,7 +120,7 @@
     />
     <button
       type="submit"
-      class="btn btn-accent join-item normal-case"
+      class="btn max-sm:btn-sm btn-accent join-item normal-case"
       disabled={searching || !isSearchValid}
     >
       Search
@@ -154,7 +154,7 @@
 
   <br />
   <div class="lg:max-w-[30rem] m-8 flex flex-col">
-    <p>
+    <p class="max-sm:text-sm">
       Alternatively, you may get your Roblox ID by going to your Roblox profile
       page and copy the long number in the URL. roblox.com/users/<span
         class="text-primary">123456789</span
@@ -164,14 +164,14 @@
       <input
         type="search"
         name="direct"
-        class="input input-bordered join-item"
+        class="input max-sm:input-sm input-bordered join-item"
         placeholder="Roblox ID"
         autocomplete="off"
         bind:value={rid}
       />
       <button
         type="button"
-        class="btn btn-primary join-item"
+        class="btn max-sm:btn-sm btn-primary join-item"
         disabled={ridBtn}
         on:click={() => {
           goto(`/editor?id=${rid}`);
