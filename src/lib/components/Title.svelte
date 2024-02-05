@@ -3,5 +3,5 @@
 </script>
 
 <svelte:head>
-  <title>{name} | RobGrafx</title>
+  <title>{name} | RoboGrafx</title>
 </svelte:head>
