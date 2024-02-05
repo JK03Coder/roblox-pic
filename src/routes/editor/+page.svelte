@@ -11,6 +11,7 @@
   import { Title, BgCanv } from '$lib/components';
   import { orbitControlsRef } from '$lib/stores';
   import { combineCanvases } from '$lib/utils';
+  import LucideImageDown from '~icons/lucide/image-down';
 
   type GradientType = 'linear' | 'radial';
 
@@ -151,7 +152,7 @@
           </div>
 
           <label
-            class="label mb-2 cursor-pointer rounded-lg p-2 shadow shadow-base-content/30"
+            class="label mb-2 bg-base-100 cursor-pointer rounded-lg p-2 shadow shadow-base-content/30"
           >
             Color 1:
             <input
@@ -163,7 +164,7 @@
           </label>
 
           <label
-            class="label mb-4 cursor-pointer rounded-lg p-2 shadow shadow-base-content/30"
+            class="label mb-4 bg-base-100 cursor-pointer rounded-lg p-2 shadow shadow-base-content/30"
           >
             Color 2:
             <input
@@ -217,15 +218,17 @@
           {/if}
         </div>
         {#if step === 2}
-          <button
-            type="button"
-            class="btn btn-accent mb-10"
-            on:click={downloadImage}>Download Image</button
-          >
-          <br />
-          <ShareButton />
-          <ShareImageButton getDataUriFunction={getDataUri} />
-          <KofiButton />
+          <p class="mb-2">Save and share your creation!</p>
+          <div class="flex flex-col gap-4 lg:gap-6">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              on:click={downloadImage}>Download Image<LucideImageDown /></button
+            >
+            <ShareButton />
+            <ShareImageButton getDataUriFunction={getDataUri} />
+            <KofiButton />
+          </div>
         {/if}
       </div>
       <div class="card-actions justify-between">
