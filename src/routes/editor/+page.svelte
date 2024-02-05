@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { Scene, Steps, CameraControls } from '$lib/components';
+  import { Scene, Steps, CameraControls, ShareButton } from '$lib/components';
   import { Title, BgCanv } from '$lib/components';
   import { orbitControlsRef } from '$lib/stores';
   import { combineCanvases } from '$lib/utils';
@@ -102,7 +102,9 @@
         {outerRadius}
       />
     {:else}
-      <h1 class="text-center mt-4">Something went wrong. Try refreshing the page</h1>
+      <h1 class="text-center mt-4">
+        Something went wrong. Try refreshing the page
+      </h1>
     {/if}
   </div>
   <div class="card bg-base-200 w-[45vh] lg:h-[45vw] shadow-xl">
@@ -204,8 +206,9 @@
         </div>
         {#if step === 2}
           <button type="button" class="btn btn-accent" on:click={downloadImage}
-            >Final Image</button
+            >Download Image</button
           >
+          <ShareButton />
         {/if}
       </div>
       <div class="card-actions justify-between">

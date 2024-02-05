@@ -5,6 +5,7 @@ import Scene from './Scene.svelte';
 import Steps from './Steps.svelte';
 import CameraControls from './CameraControls.svelte';
 import BgCanv from './BgCanv.svelte';
+import ShareButton from './ShareButton.svelte';
 
 export {
   DarkModeToggle,
@@ -14,4 +15,5 @@ export {
   Steps,
   CameraControls,
   BgCanv,
+  ShareButton,
 };
