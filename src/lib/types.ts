@@ -48,3 +48,9 @@ export interface Datum {
   name: string;
   displayName: string;
 }
+
+export interface User {
+  id: number;
+  name: string;
+  displayName: string;
+}

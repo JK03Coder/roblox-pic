@@ -15,7 +15,8 @@ body {
 }
 
 .toast {
-  margin-top: 3.75rem
+  margin-top: 3.75rem;
+  z-index: 200;
 }
 
 /* removes the alerts default small screen css by always setting the large screen as default */
@@ -26,27 +27,25 @@ body {
   text-align: left;
 }
 
-
-
-input[type="color"]::-webkit-color-swatch-wrapper {
+input[type='color']::-webkit-color-swatch-wrapper {
   padding: 0;
 }
 
-input[type="color"]::-webkit-color-swatch {
+input[type='color']::-webkit-color-swatch {
   border: none;
   box-shadow: none;
 }
 
-input[type="color"]::-moz-color-swatch {
+input[type='color']::-moz-color-swatch {
   border: none;
   box-shadow: none;
 }
 
-input[type="color"]::-moz-focus-inner {
+input[type='color']::-moz-focus-inner {
   border: none;
 }
 
-input[type="color"] {
+input[type='color'] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
