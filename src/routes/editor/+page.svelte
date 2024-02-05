@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { Scene, Steps, CameraControls, ShareButton } from '$lib/components';
+  import { Scene, Steps, CameraControls, ShareButton, ShareImageButton } from '$lib/components';
   import { Title, BgCanv } from '$lib/components';
   import { orbitControlsRef } from '$lib/stores';
   import { combineCanvases } from '$lib/utils';
@@ -37,8 +37,7 @@
     [color1, color2] = [color2, color1];
   }
 
-  async function downloadImage(_event: Event) {
-    showLoading = true;
+  async function getDataUri() {
     let downloadDataUri: string | void = await combineCanvases(
       backgroundCanvas,
       sceneCanvas,
@@ -53,6 +52,12 @@
         console.error('An error occurred:', error);
         return;
       });
+    return downloadDataUri;
+  }
+
+  async function downloadImage(_event: Event) {
+    showLoading = true;
+    let downloadDataUri: string | void = await getDataUri();
 
     if (!downloadDataUri) {
       console.error('dataUri is invalid');
@@ -209,6 +214,7 @@
             >Download Image</button
           >
           <ShareButton />
+          <ShareImageButton getDataUriFunction={getDataUri} />
         {/if}
       </div>
       <div class="card-actions justify-between">
