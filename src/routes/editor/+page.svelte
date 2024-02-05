@@ -73,7 +73,7 @@
     }
     const anchor = document.createElement('a');
     anchor.href = downloadDataUri;
-    anchor.download = 'final.png';
+    anchor.download = 'RoboGrafx.png';
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
@@ -227,7 +227,10 @@
             >
             <ShareButton />
             <ShareImageButton getDataUriFunction={getDataUri} />
-            <KofiButton />
+            <div>
+              You can support the site here
+              <KofiButton />
+            </div>
           </div>
         {/if}
       </div>
