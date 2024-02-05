@@ -8,7 +8,6 @@ export const load = (async () => {
 
 export const actions: Actions = {
   search: async ({ request }) => {
-    await new Promise((fulfil) => setTimeout(fulfil, 1000));
     const data = await request.formData();
     const username = data.get('search');
 
