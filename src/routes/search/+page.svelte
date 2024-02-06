@@ -104,7 +104,7 @@
 
 <Title name="Search" />
 
-<main class="flex flex-col items-center text-xl mt-10 lg:mt-20">
+<div class="flex flex-col items-center text-xl mt-10 lg:mt-20">
   <h2 class="mb-2.5 max-sm:text-sm">Please type your avatar's username in</h2>
 
   <form on:submit={handleSearch} class="join lg:w-96 lg:mx-auto">
@@ -183,4 +183,4 @@
       </button>
     </div>
   </div>
-</main>
+</div>
