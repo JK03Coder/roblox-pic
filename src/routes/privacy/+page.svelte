@@ -1,4 +1,4 @@
-<div class="document-previewer-wrapper-a717db" style="margin: 3em">
+<div class="document-previewer-wrapper-a717db" style="padding: 3em; background-color: white;">
   <style>
     [data-custom-class='body'],
     [data-custom-class='body'] * {
