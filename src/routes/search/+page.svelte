@@ -105,7 +105,10 @@
 <Title name="Search" />
 
 <div class="flex flex-col items-center text-xl mt-10 lg:mt-20">
-  <h2 class="mb-2.5 max-sm:text-sm">Please type your avatar's username in</h2>
+  <h2 class="mb-3 lg:mb-6 max-sm:text-xl text-3xl font-bold">
+    Search for your Roblox Avatar
+  </h2>
+  <h3 class="mb-2.5 max-sm:text-sm">Please type your avatar's username in</h3>
 
   <form on:submit={handleSearch} class="join lg:w-96 lg:mx-auto">
     <input
@@ -183,4 +186,11 @@
       </button>
     </div>
   </div>
+  <p class="max-sm:text-sm">
+    Not Ready to customize your Roblox Avatar yet?<br />Try our editor out
+    below.
+  </p>
+  <a class="btn btn-primary mt-3 max-sm:btn-sm" href="/editor?id=000000001"
+    >Test It Out!</a
+  >
 </div>

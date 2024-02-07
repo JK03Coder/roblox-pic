@@ -86,8 +86,27 @@
 <div
   class="flex flex-col lg:flex-row items-center lg:justify-center h-full gap-2 lg:gap-8 p-8"
 >
+  <div class="flex-grow flex-shrink-0">
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6027683009484183"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Editor Ads -->
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-6027683009484183"
+      data-ad-slot="3405665998"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
   <div
-    class="relative bg-base-200 w-[45vh] h-[45vh] lg:w-[45vw] lg:h-[45vw] shadow-xl"
+    class="relative flex-shrink-0 bg-base-200 w-[45vh] h-[45vh] lg:w-[45vw] lg:h-[45vw] shadow-xl"
   >
     <div
       class:hidden={!showLoading}
@@ -120,7 +139,7 @@
       </h1>
     {/if}
   </div>
-  <div class="card bg-base-200 w-[45vh] lg:h-[45vw] shadow-xl">
+  <div class="flex-shrink-0 card bg-base-200 w-[45vh] lg:h-[45vw] shadow-xl">
     <div class="card-body max-sm:pt-2">
       <Steps bind:step />
       <h1 class="card-title">{tabTitle[step]}</h1>
@@ -251,5 +270,24 @@
         >
       </div>
     </div>
+  </div>
+  <div class="flex-grow flex-shrink-0">
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6027683009484183"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Editor Ads -->
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-6027683009484183"
+      data-ad-slot="3405665998"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
   </div>
 </div>
