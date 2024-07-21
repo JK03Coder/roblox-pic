@@ -237,6 +237,9 @@
             </p>
           </div>
         {/if}
+        {#if step === 1}
+          <a href={callGetDataURL()} class="btn btn-link">download</a>
+        {/if}
       </div>
       <div class="card-actions justify-between">
         <button
