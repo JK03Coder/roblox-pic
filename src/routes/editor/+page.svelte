@@ -238,7 +238,7 @@
           </div>
         {/if}
         {#if step === 1}
-          <a href={callGetDataURL()} class="btn btn-link">download</a>
+          <a href={callGetDataURL()} class="btn btn-link" download="image.png">download</a>
         {/if}
       </div>
       <div class="card-actions justify-between">
