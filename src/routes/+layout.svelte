@@ -1,12 +1,23 @@
 <script lang="ts">
   import '../app.postcss';
-  import type { LayoutData } from './$types';
+  // import type { LayoutData } from './$types';
   import { DarkModeToggle } from '$lib/components';
   import Toast from 'svelte-daisy-toast';
   import LucideUserSearch from '~icons/lucide/user-search';
+  import { dev } from '$app/environment';
 
-  export let data: LayoutData;
+  // export let data: LayoutData;
 </script>
+
+<svelte:head>
+  {#if dev === false}
+    <script
+      defer
+      src="https://umami.jkem.xyz/script.js"
+      data-website-id="2a2f798b-53a1-4c3d-a181-79558c8e5599"
+    ></script>
+  {/if}
+</svelte:head>
 
 <Toast position="top-end" />
 

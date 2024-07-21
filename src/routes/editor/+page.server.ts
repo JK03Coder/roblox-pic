@@ -40,19 +40,21 @@ export const load = (async ({ url }) => {
     });
   }
   try {
-    const data: AvatarData = await getAvatarData(rid!, 300);
+    const dataPromise = getAvatarData(rid, 300).then(async (data) => {
+      const imageUrl = data.imageUrl;
+      const imageResponse = await fetch(imageUrl);
+      const imageData: ImageData = await imageResponse.json();
 
-    const imageUrl = data.imageUrl;
-    const imageResponse = await fetch(imageUrl);
-    const imageData: ImageData = await imageResponse.json();
+      const { camera, aabb, mtl, obj } = imageData;
 
-    const { camera, aabb, mtl, obj }: ImageData = imageData;
+      if (!camera || !aabb || !mtl || !obj) {
+        throw new Error('Invalid data received');
+      }
 
-    if (!camera || !aabb || !mtl || !obj) {
-      throw new Error('Invalid data received');
-    }
+      return { camera, aabb, mtl, obj };
+    });
 
-    return { camera, aabb, mtl, obj };
+    return { dataPromise };
   } catch (err) {
     console.error('Error: ', err);
     error(424, {

@@ -26,8 +26,6 @@
     if ($orbitControlsRef) $orbitControlsRef.enabled = false;
   }
 
-  let { camera, aabb, mtl, obj } = data;
-
   let backgroundCanvas: HTMLCanvasElement;
   let sceneCanvas: HTMLCanvasElement;
   let renderer: THREE.WebGLRenderer;
@@ -86,25 +84,6 @@
 <div
   class="flex flex-col lg:flex-row items-center lg:justify-center h-full gap-2 lg:gap-8 p-8"
 >
-  <div class="flex-grow flex-shrink-0">
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6027683009484183"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Editor Ads -->
-    <ins
-      class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-6027683009484183"
-      data-ad-slot="3405665998"
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    ></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
   <div
     class="relative flex-shrink-0 bg-base-200 w-[45vh] h-[45vh] lg:w-[45vw] lg:h-[45vw] shadow-xl"
   >
@@ -114,7 +93,13 @@
     >
       <div class="loading loading-spinner w-[5vh] lg:w-[5vw]" />
     </div>
-    {#if camera && aabb && mtl && obj}
+    {#await data.dataPromise}
+      <div
+        class="bg-base-200 absolute flex items-center justify-center top-0 w-full h-full z-50"
+      >
+        <div class="loading loading-spinner w-[5vh] lg:w-[5vw]" />
+      </div>
+    {:then { camera, aabb, mtl, obj }}
       <Scene
         bind:canvReference={sceneCanvas}
         bind:renderer
@@ -133,11 +118,7 @@
         {innerRadius}
         {outerRadius}
       />
-    {:else}
-      <h1 class="text-center mt-4">
-        Something went wrong. Try refreshing the page
-      </h1>
-    {/if}
+    {/await}
   </div>
   <div class="flex-shrink-0 card bg-base-200 w-[45vh] lg:h-[45vw] shadow-xl">
     <div class="card-body max-sm:pt-2">
@@ -145,9 +126,13 @@
       <h1 class="card-title">{tabTitle[step]}</h1>
       <div class="flex-1">
         <!-- Camera Controls -->
-        {#if camera && aabb && step === 0}
-          <CameraControls {camera} {aabb} />
-        {/if}
+        {#await data.dataPromise}
+          <p>We are currently getting your Roblox Avatar for you.</p>
+        {:then { camera, aabb }}
+          {#if step === 0}
+            <CameraControls {camera} {aabb} />
+          {/if}
+        {/await}
         <!-- Gradient Controls -->
         <div class:hidden={step !== 1}>
           <ul class="space-y-2">
@@ -246,10 +231,10 @@
             >
             <ShareButton />
             <ShareImageButton getDataUriFunction={getDataUri} />
-            <div>
+            <p class="leading-10">
               You can support the site here
               <KofiButton />
-            </div>
+            </p>
           </div>
         {/if}
       </div>
@@ -270,24 +255,5 @@
         >
       </div>
     </div>
-  </div>
-  <div class="flex-grow flex-shrink-0">
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6027683009484183"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Editor Ads -->
-    <ins
-      class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-6027683009484183"
-      data-ad-slot="3405665998"
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    ></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
   </div>
 </div>
