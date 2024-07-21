@@ -4,6 +4,20 @@ import Title from './Title.svelte';
 import Scene from './Scene.svelte';
 import Steps from './Steps.svelte';
 import CameraControls from './CameraControls.svelte';
-import Background from './Background.svelte';
+import BgCanv from './BgCanv.svelte';
+import ShareButton from './ShareButton.svelte';
+import ShareImageButton from './ShareImageButton.svelte';
+import KofiButton from './KofiButton.svelte';
 
-export { DarkModeToggle, RobloxLogo, Title, Scene, Steps, CameraControls, Background };
+export {
+  DarkModeToggle,
+  RobloxLogo,
+  Title,
+  Scene,
+  Steps,
+  CameraControls,
+  BgCanv,
+  ShareButton,
+  ShareImageButton,
+  KofiButton,
+};

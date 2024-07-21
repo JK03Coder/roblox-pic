@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { AvatarData, ImageData } from '$lib/types';
 
@@ -31,30 +31,35 @@ imageUrl response
 }
 */
 
-export const load = (async (event) => {
-  const layoutData = await event.parent();
-  if (!layoutData.isAuth) {
-    redirect(303, '/');
+export const load = (async ({ url }) => {
+  const rid = url.searchParams.get('id');
+
+  if (rid === null || !/^\d+$/.test(rid)) {
+    error(400, {
+      message: 'Invalid Roblox ID',
+    });
   }
-  const rid = layoutData.robloxId;
-
   try {
-    const data: AvatarData = await getAvatarData(rid!, 300);
+    const dataPromise = getAvatarData(rid, 300).then(async (data) => {
+      const imageUrl = data.imageUrl;
+      const imageResponse = await fetch(imageUrl);
+      const imageData: ImageData = await imageResponse.json();
 
-    const imageUrl = data.imageUrl;
-    const imageResponse = await fetch(imageUrl);
-    const imageData: ImageData = await imageResponse.json();
+      const { camera, aabb, mtl, obj } = imageData;
 
-    const { camera, aabb, mtl, obj }: ImageData = imageData;
+      if (!camera || !aabb || !mtl || !obj) {
+        throw new Error('Invalid data received');
+      }
 
-    if (!camera || !aabb || !mtl || !obj) {
-      throw new Error('Invalid data received');
-    }
+      return { camera, aabb, mtl, obj };
+    });
 
-    return { camera, aabb, mtl, obj };
-  } catch (error) {
-    console.error('Error: ', error);
-    redirect(303, '/dashboard');
+    return { dataPromise };
+  } catch (err) {
+    console.error('Error: ', err);
+    error(424, {
+      message: 'Something went wrong',
+    });
   }
 }) satisfies PageServerLoad;
 

@@ -1,3 +1,3 @@
-#  Roblox Picture Web App
+# Roblox Picture Web App
 
-Using SvelteKit, Cloudflare pages & D1 with Lucia for Authentication.
+Using SvelteKit & Cloudflare pages introducing RoboGrafx!

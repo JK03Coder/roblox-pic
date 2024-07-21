@@ -34,3 +34,23 @@ export interface CameraSettings {
   camera: Camera;
   aabb: AABB;
 }
+
+export interface UsersData {
+  previousPageCursor: null;
+  nextPageCursor: string;
+  data: Datum[];
+}
+
+export interface Datum {
+  previousUsernames: any[];
+  hasVerifiedBadge: boolean;
+  id: number;
+  name: string;
+  displayName: string;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  displayName: string;
+}
